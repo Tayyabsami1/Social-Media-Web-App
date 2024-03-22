@@ -27,6 +27,7 @@ app.get('/Card', async (req, res) => {
         const pool = await sql.connect(config);
         const data = pool.request().query('select * from Card');
         data.then(res1 => {
+            console.log(res1);
             return res.json(res1);
         })
     }
@@ -34,6 +35,21 @@ app.get('/Card', async (req, res) => {
         console.log(err);
     }
 
+})
+
+app.get('/card/:cardNum', async (req, res) => {
+    try {
+        const pool = await sql.connect(config);
+        const data = pool.request().input('parameter', sql.VarChar, req.params.cardNum).query("select * from card where cardNum=@parameter");
+        data.then(res1 => {
+            return res.json(res1.recordset);
+        }
+        )
+
+    }
+    catch (err) {
+            console.log(err);
+    }
 })
 
 app.get('/', (req, res) => {
