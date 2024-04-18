@@ -1,9 +1,16 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
-import { BrowserRouter,Routes,Route } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  Outlet,
+  RouterProvider,
+} from "react-router-dom";
 import Login from './Components/Login';
 import SignUp from './Components/SignUp';
 import Home from './Components/Home';
+import Navbar from './Components/Navbar';
+import Profile from './Components/Profile';
 
 const App = () => {
   // const [data, setData] = useState([]);
@@ -12,23 +19,53 @@ const App = () => {
 
   // }, [])
 
+  const user= false;
+  const Layout =()=>{
+    return (
+    <>
+    <Navbar/>
+    <Outlet/>
+    </>
+    )
+  }
+
+  const ProtectedRoute=({children})=>{
+    if(!user)
+    {
+      return <Navigate to='/Login'/>
+    }
+    return children;
+  }
+
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <ProtectedRoute><Layout/></ProtectedRoute>,
+      children: [{
+        path:"/",
+        element:<Home/>,
+      },
+      {
+        path: "/Profile",
+        element: <Profile/>
+      }
+    ]
+    },
+    {
+      path: "/Login",
+      element: <Login />,
+    },
+    {
+      path: "/Signup",
+      element: <SignUp />,
+    },
+  ]);
+
+
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path="/Login"
-          element={ <Login/>}
-        />
-        <Route
-          path='/SignUp'
-          element={ <SignUp/>}
-        />
-        <Route
-        path='/Home'
-        element={<Home/>}
-        />
-      </Routes>
-    </BrowserRouter>
+    <>
+      <RouterProvider router={router} />
+    </>
   )
 }
 

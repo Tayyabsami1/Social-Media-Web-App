@@ -1,5 +1,5 @@
 import React from 'react'
-import '../Css/Signup.css';
+import '../Css/Signup.scss';
 import { Link,useNavigate } from 'react-router-dom'
 import {useState} from 'react';
 
@@ -44,7 +44,7 @@ const SignUp = () => {
   };
 
   const handelSignup=()=>{
-    navigate('/Home')
+    navigate('/')
   }
 
 
