@@ -11,20 +11,28 @@ import SignUp from './Components/SignUp';
 import Home from './Components/Home';
 import Navbar from './Components/Navbar';
 import Profile from './Components/Profile';
+import Rightbar from './Components/Rightbar';
 
 const App = () => {
+  
   // const [data, setData] = useState([]);
   // useEffect(() => {
   //   fetch('http://localhost:3000/Card').then(res => res.json()).then(res => setData(res.recordset));
 
   // }, [])
 
-  const user= false;
+  const user= true;
+
   const Layout =()=>{
     return (
     <>
     <Navbar/>
+    <div style={{display: "flex"}}>
+    <div style={{flex: 6}}>
     <Outlet/>
+    </div>
+    <Rightbar/>
+    </div>
     </>
     )
   }
