@@ -1,0 +1,10 @@
+@import '../Styles.scss';
+
+
+
+.Home{
+    @include themify($themes) {
+        background-color: themed("bgSoft");
+        color: themed("textColorSoft");
+    }
+}

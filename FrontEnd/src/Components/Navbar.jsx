@@ -1,13 +1,20 @@
 import React from 'react'
+import { useContext } from 'react';
 import '../Css/Navbar.scss'
 import SearchIcon from '@mui/icons-material/Search';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import MailOutlineOutlinedIcon from '@mui/icons-material/MailOutlineOutlined';
 import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined';
+import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
+import WbSunnyOutlinedIcon from '@mui/icons-material/WbSunnyOutlined';
 import  mypic from '../assets/mypic.png'
 import { Link } from 'react-router-dom';
+import { DarkModeContext } from '../Context/darkModeContext';
 
 const Navbar = () => {
+
+  const {toggle,darkMode}= useContext(DarkModeContext);
+  
   return (
     <>
     <div className="Navbar">
@@ -25,9 +32,12 @@ const Navbar = () => {
       </div>
 
       <div className="right">
-        <HomeOutlinedIcon/>
-        <Person2OutlinedIcon/>
-        <MailOutlineOutlinedIcon/>
+
+       {darkMode ?<WbSunnyOutlinedIcon className='icon' onClick={toggle}/>: <DarkModeOutlinedIcon className='icon' onClick={toggle}/> } 
+        <HomeOutlinedIcon className='icon'/>
+        <Person2OutlinedIcon className='icon'/>
+        <MailOutlineOutlinedIcon className='icon'/>
+
         <div className="user">
           <img src={mypic} alt="" />
           <span>Tayyab Sami</span>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useEffect, useState } from 'react'
 import {
   createBrowserRouter,
@@ -6,12 +6,16 @@ import {
   Outlet,
   RouterProvider,
 } from "react-router-dom";
+
 import Login from './Components/Login';
 import SignUp from './Components/SignUp';
 import Home from './Components/Home';
 import Navbar from './Components/Navbar';
 import Profile from './Components/Profile';
 import Rightbar from './Components/Rightbar';
+
+import './Styles.scss'
+import { DarkModeContext } from './Context/darkModeContext';
 
 const App = () => {
   
@@ -22,10 +26,11 @@ const App = () => {
   // }, [])
 
   const user= true;
+  const {darkMode}= useContext(DarkModeContext);
 
   const Layout =()=>{
     return (
-    <>
+    <div className={`theme-${darkMode? "dark":"light"}`}>
     <Navbar/>
     <div style={{display: "flex"}}>
     <div style={{flex: 6}}>
@@ -33,7 +38,7 @@ const App = () => {
     </div>
     <Rightbar/>
     </div>
-    </>
+    </div>
     )
   }
 

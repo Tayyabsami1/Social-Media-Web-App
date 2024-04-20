@@ -37,7 +37,7 @@ const Rightbar = () => {
                         <div className="userinfo">
                             <img src={mypic} alt="" />
                             <p>
-                                <span>Tayyab Sami</span> Changed their cover picture
+                                <span>Tayyab Sami</span> Changed their picture
                             </p>
                         </div>
                         <span>1 min ago </span>
@@ -79,9 +79,35 @@ const Rightbar = () => {
                     <div className="user">
                         <div className="userinfo">
                             <img src={mypic} alt="" />
+                            <div className="online"/>
                                 <span>Tayyab Sami</span>
                         </div>
                     </div>
+
+                    <div className="user">
+                        <div className="userinfo">
+                            <img src={mypic} alt="" />
+                            <div className="online"/>
+                                <span>Tayyab Sami</span>
+                        </div>
+                    </div>
+
+                    <div className="user">
+                        <div className="userinfo">
+                            <img src={mypic} alt="" />
+                            <div className="online"/>
+                                <span>Tayyab Sami</span>
+                        </div>
+                    </div>
+
+                    <div className="user">
+                        <div className="userinfo">
+                            <img src={mypic} alt="" />
+                            <div className="online"/>
+                                <span>Tayyab Sami</span>
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
         </div>

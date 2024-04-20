@@ -1,55 +1,71 @@
-.Navbar{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 25px;
-    height: 50px;
-    border-bottom: 1px solid lightgray;
-    position: sticky;
-    top: 0;
-    background-color: white;
-    .left{
+@import '../Styles.scss';
+
+.Navbar {
+    @include themify($themes) {
         display: flex;
         align-items: center;
-        gap: 50px;
-        span{
-            font-weight: bold;
-            font-size: 20px;
-            color: darkblue;
+        justify-content: space-between;
+        padding: 10px 25px;
+        height: 50px;
+        border-bottom: 1px solid themed("border");
+        position: sticky;
+        top: 0;
+        background-color: themed("bg");
+        color: themed("textColor");
 
-        }
-
-        .search{
+        .left {
             display: flex;
             align-items: center;
-            gap: 10px;
-            border: 1px solid lightgray;
-            border-radius: 5px;
-            padding: 5px;
+            gap: 50px;
 
-            input{
-                border: none;
-                width: 350px;
+            span {
+                font-weight: bold;
+                font-size: 20px;
+                color: themed("logo");;
+
+            }
+
+            .search {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                border: 1px solid themed("border");
+                border-radius: 5px;
+                padding: 5px;
+
+                input {
+                    border: none;
+                    width: 350px;
+                    color: themed("textColor");
+                    background-color: transparent;
+                }
             }
         }
-    }
 
-    .right{
-        display: flex;
-        align-items: center;
-        gap: 50px;
-        .user{
+        .right {
             display: flex;
             align-items: center;
-            gap: 10px;
-            img{
-                width: 30px;
-                height: 30px;
-                border-radius: 50%;
-                object-fit: cover;
+            gap: 50px;
+
+            .icon{
+                cursor: pointer;
             }
-            span{
-                font-weight: 500;
+
+            .user {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+
+                img {
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                }
+
+                span {
+                    font-weight: 500;
+                }
             }
         }
     }

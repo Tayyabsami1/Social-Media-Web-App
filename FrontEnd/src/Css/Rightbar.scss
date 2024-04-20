@@ -1,74 +1,94 @@
+@import '../Styles.scss';
+
+
 .Rightbar {
-    position: sticky;
-    top: 70px;
-    height: calc(100vh - 70px);
-    flex: 3;
-    overflow: scroll;
+    @include themify($themes) {
+        position: sticky;
+        top: 50px;
+        height: calc(100vh - 50px);
+        flex: 3;
+        overflow: scroll;
+        background-color: themed("bgSoft");
+        &::-webkit-scrollbar {
+            display: none;
+        }
 
-    &::-webkit-scrollbar {
-        display: none;
-      }
-  
 
-    .container {
-        padding: 20px;
+        .container {
+            background-color: themed("bgSoft");
 
-        .item {
-            -webkit-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
-            -moz-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
-            box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
-            padding: 20px;
-            border-radius: 5px;
-            margin-bottom: 20px;
+            padding: 0 20px;
 
-            span {
-                color: grey;
-            }
+            .item {
+                -webkit-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
+                -moz-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
+                box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
+                padding: 20px;
+                border-radius: 5px;
+                margin-bottom: 20px;
+                background-color: themed("bg");
 
-            .user {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                margin: 20px 0px;
-
-                .userinfo {
-                    display: flex;
-                    align-items: center;
-                    gap: 5px;
-
-                    img {
-                        height: 40px;
-                        width: 40px;
-                        border-radius: 50%;
-                        object-fit: cover;
-                    }
-                    p{
-                     color: gray;   
-                    }
-
-                    span {
-                        color: black;
-                        font-weight: 500;
-                    }
+                span {
+                    color: grey;
                 }
 
-                .buttons {
+                .user {
                     display: flex;
                     align-items: center;
-                    gap: 10px;
+                    justify-content: space-between;
+                    margin: 20px 0px;
 
-                    button {
-                        border: none;
-                        padding: 5px;
-                        cursor: pointer;
-                        color: white;
+                    .userinfo {
+                        display: flex;
+                        align-items: center;
+                        gap: 5px;
+                        position: relative;
 
-                        &:first-child {
-                            background-color: blue;
+                        img {
+                            height: 40px;
+                            width: 40px;
+                            border-radius: 50%;
+                            object-fit: cover;
                         }
 
-                        &:last-child {
-                            background-color: red;
+                        .online {
+                            height: 12px;
+                            width: 12px;
+                            background-color: limegreen;
+                            border-radius: 50%;
+                            position: absolute;
+                            top: 0;
+                            left: 30px;
+                        }
+
+                        p {
+                            color: themed("textColorSoft");
+                        }
+
+                        span {
+                            color: themed("textColor");
+                            font-weight: 500;
+                        }
+                    }
+
+                    .buttons {
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+
+                        button {
+                            border: none;
+                            padding: 5px;
+                            cursor: pointer;
+                            color: white;
+
+                            &:first-child {
+                                background-color: blue;
+                            }
+
+                            &:last-child {
+                                background-color: red;
+                            }
                         }
                     }
                 }
