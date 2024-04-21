@@ -1,0 +1,8 @@
+@import './Styles.scss';
+
+.mainbody{
+    @include themify($themes) {
+        background-color: themed("bgSoft");
+
+    }
+}

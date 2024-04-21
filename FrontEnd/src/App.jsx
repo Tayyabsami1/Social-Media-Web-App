@@ -16,6 +16,8 @@ import Rightbar from './Components/Rightbar';
 
 import './Styles.scss'
 import { DarkModeContext } from './Context/darkModeContext';
+import { AuthContext } from './Context/AuthContext';
+import './App.scss'
 
 const App = () => {
   
@@ -25,14 +27,14 @@ const App = () => {
 
   // }, [])
 
-  const user= true;
+  const user= useContext(AuthContext);
   const {darkMode}= useContext(DarkModeContext);
 
   const Layout =()=>{
     return (
-    <div className={`theme-${darkMode? "dark":"light"}`}>
+    <div className={`theme-${darkMode? "dark":"light"} `}>
     <Navbar/>
-    <div style={{display: "flex"}}>
+    <div style={{display: "flex"}} className='mainbody'>
     <div style={{flex: 6}}>
     <Outlet/>
     </div>

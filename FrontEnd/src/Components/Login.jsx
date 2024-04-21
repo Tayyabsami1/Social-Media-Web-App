@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import '../Css/Login.scss'
 import { Link,useNavigate } from 'react-router-dom'
 import { useState } from 'react'
+import { AuthContext } from '../Context/AuthContext'
 
 
 const Login = () => {
+
+  const {login}=useContext(AuthContext)
 
   const Navigate=useNavigate();
   const initialSrc = 'https://img.icons8.com/ios/50/FFFFFF/visible--v1.png';
@@ -32,6 +35,7 @@ const Login = () => {
 
   const handleLogin=()=>{
     Navigate('/')
+    login();
   }
   return (
     <>

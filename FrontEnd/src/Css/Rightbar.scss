@@ -3,6 +3,7 @@
 
 .Rightbar {
     @include themify($themes) {
+        margin-top: 20px;
         position: sticky;
         top: 50px;
         height: calc(100vh - 50px);

@@ -1,54 +1,11 @@
 import React from 'react'
 import '../Css/Home.scss'
+import Posts from './Posts'
 
 const Home = () => {
   return (
     <div className='Home'>
-      <h1>I am home </h1>
-      <h1>I am home </h1>
-      <h1>I am home </h1>
-      <h1>I am home </h1>
-      <h1>I am home </h1>
-      <h1>I am home </h1>
-      <h1>I am home </h1>
-      <h1>I am home </h1>
-      <h1>I am home </h1>
-      <h1>I am home </h1>
-      <h1>I am home </h1>
-      <h1>I am home </h1>
-      <h1>I am home </h1>
-      <h1>I am home </h1>
-      <h1>I am home </h1>
-      <h1>I am home </h1>
-      <h1>I am home </h1>
-      <h1>I am home </h1>
-      <h1>I am home </h1>
-      <h1>I am home </h1>
-      <h1>I am home </h1>
-      <h1>I am home </h1>
-      <h1>I am home </h1>
-      <h1>I am home </h1>
-      <h1>I am home </h1>
-      <h1>I am home </h1>
-      <h1>I am home </h1>
-      <h1>I am home </h1>
-      <h1>I am home </h1>
-      <h1>I am home </h1>
-      <h1>I am home </h1>
-      <h1>I am home </h1>
-      <h1>I am home </h1>
-      <h1>I am home </h1>
-      <h1>I am home </h1>
-      <h1>I am home </h1>
-      <h1>I am home </h1>
-      <h1>I am home </h1>
-      <h1>I am home </h1>
-      <h1>I am home </h1>
-      <h1>I am home </h1>
-      <h1>I am home </h1>
-      <h1>I am home </h1>
-      <h1>I am home </h1>
-      <h1>I am home </h1>
+      <Posts/>
     </div>
   )
 }
