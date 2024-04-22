@@ -32,6 +32,9 @@
                 border: 1px solid themed("border");
                 border-radius: 5px;
                 padding: 5px;
+                @include mobile{
+                    display: none;
+                }
 
                 input {
                     border: none;
@@ -47,6 +50,9 @@
             align-items: center;
             gap: 50px;
 
+            @include mobile{
+                display: none;
+            }
             .icon{
                 cursor: pointer;
             }
