@@ -1,0 +1,134 @@
+@import '../Styles.scss';
+
+.Chatcontainer {
+    @include themify($themes) {
+        background-color: themed("bgSoft");
+        color: themed("textColorSoft");
+        display: flex;
+        height: 100vh;
+        position: relative;
+
+        .Messages {
+            display: flex;
+            flex: 2;
+            flex-direction: column;
+            gap: 20px;
+            margin: 10px 0px;
+            overflow: scroll;
+            cursor: pointer;
+            color: themed("textColorSoft");
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
+
+            .Message {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                border-bottom: 1px solid themed("border");
+                padding: 5px;
+
+                img {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                }
+
+                .userinfo {
+
+                    span {
+                        font-weight: 500;
+                    }
+
+                    p {
+                        font-weight: 300;
+                        font-size: 14px;
+                    }
+                }
+            }
+        }
+
+        .chat {
+            flex: 5;
+            position: sticky;
+            border-left: 1px solid themed("border");
+            overflow: scroll;
+            &::-webkit-scrollbar {
+                display: none;
+            }
+
+            .top{
+                padding: 17px;
+                display: flex;
+                align-items: center;
+                border-bottom:  1px solid themed("border");
+                .user{
+                    display: flex;
+                    align-items: center;
+                    gap: 20px;
+
+                    img{
+                        width: 40px;
+                        height: 40px;
+                        object-fit: cover;
+                        border-radius: 50%;
+                    }
+                    .texts{
+                        display: flex;
+                        flex-direction: column;
+                        gap:5px;
+                        span{
+                            font-weight: bold;
+                            font-size: 18px;
+                        }
+                        p{
+                            font-size: 14px;
+                            font-weight: 300;
+                        }
+                    }
+                }
+            }
+
+            .center{
+
+            }
+
+            .bottom{
+                display: flex;
+                align-items: center;
+                padding: 20px;
+                justify-content: space-between;
+                border-bottom:  1px solid themed("border");
+                background-color: themed("bg");
+                border-right: 1px solid themed("border");
+                gap: 20px;
+                border-radius: 10px;
+                font-size: 16px;
+                
+                .icons{
+                    cursor: pointer;
+                }
+
+                input{
+                    flex: 1;
+                    background-color: transparent;
+                    border: none;
+                    outline: none;
+                    color: themed("textColorSoft");
+
+                }
+
+                .emoji{
+
+                }
+
+                button{
+
+                }
+            }
+        }
+
+    }
+}

@@ -8,13 +8,13 @@ import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import WbSunnyOutlinedIcon from '@mui/icons-material/WbSunnyOutlined';
 import  mypic from '../assets/mypic.png'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { DarkModeContext } from '../Context/darkModeContext';
 
 const Navbar = () => {
 
   const {toggle,darkMode}= useContext(DarkModeContext);
-  
+  const navigate = useNavigate();
   return (
     <>
     <div className="Navbar">
@@ -34,9 +34,9 @@ const Navbar = () => {
       <div className="right">
 
        {darkMode ?<WbSunnyOutlinedIcon className='icon' onClick={toggle}/>: <DarkModeOutlinedIcon className='icon' onClick={toggle}/> } 
-        <HomeOutlinedIcon className='icon'/>
+        <HomeOutlinedIcon onClick={()=> navigate("/")} className='icon'/>
         <Person2OutlinedIcon className='icon'/>
-        <MailOutlineOutlinedIcon className='icon'/>
+        <MailOutlineOutlinedIcon onClick={()=>( navigate("/messages"))}  className='icon'/>
 
         <div className="user">
           <img src={mypic} alt="" />

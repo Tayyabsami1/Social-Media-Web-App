@@ -18,6 +18,7 @@ import './Styles.scss'
 import { DarkModeContext } from './Context/darkModeContext';
 import { AuthContext } from './Context/AuthContext';
 import './App.scss'
+import Messages from './Components/Messages';
 
 const App = () => {
   
@@ -63,6 +64,10 @@ const App = () => {
       {
         path: "/Profile",
         element: <Profile/>
+      },
+      {
+        path:"/Messages",
+        element: <Messages/>
       }
     ]
     },
