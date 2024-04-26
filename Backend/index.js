@@ -7,7 +7,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-Hi
+
 const config = {
     user: "tks",
     password: "1234",
@@ -61,34 +61,35 @@ const config = {
 //     "Username":"tayyab4",
 //     "Password":"1234"
 //   }
-app.post('/Signup', async (req, res) => {
 
-    try {
+// app.post('/Signup', async (req, res) => {
 
-        if (!req.body.Username || !req.body.Password) {
-            return res.status(400).json({ msg: 'Missing required fields: Username and Password' });
-        }
+//     try {
 
-        const pool = await sql.connect(config);
+//         if (!req.body.Username || !req.body.Password) {
+//             return res.status(400).json({ msg: 'Missing required fields: Username and Password' });
+//         }
 
-        const myreq =  pool.request();
-        myreq.input("Username", sql.VarChar(50), req.body.Username);
-        myreq.input("Password", sql.VarChar(50), req.body.Password);
+//         const pool = await sql.connect(config);
 
-        const data = await myreq.query("insert into Users (Username,Password) values (@Username,@Password);")
+//         const myreq =  pool.request();
+//         myreq.input("Username", sql.VarChar(50), req.body.Username);
+//         myreq.input("Password", sql.VarChar(50), req.body.Password);
 
-            return res.json({ msg: 'User added successfully' });
-    }
-    catch (err) {
-        console.log(err);
-    }
+//         const data = await myreq.query("insert into Users (Username,Password) values (@Username,@Password);")
 
-});
+//             return res.json({ msg: 'User added successfully' });
+//     }
+//     catch (err) {
+//         console.log(err);
+//     }
+
+// });
 
 
-app.get('/', (req, res) => {
-    return res.json("Hi i am backend");
-})
+// app.get('/', (req, res) => {
+//     return res.json("Hi i am backend");
+// })
 
 app.listen(3000, () => {
     console.log("The server has started");

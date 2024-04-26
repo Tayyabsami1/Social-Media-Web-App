@@ -19,6 +19,9 @@ CREATE TABLE Users (
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP 
 );
 
+select * from Users
+
+
 -- Written by Imran
 CREATE TABLE Posts (
     post_id INT IDENTITY(1,1) PRIMARY KEY,
