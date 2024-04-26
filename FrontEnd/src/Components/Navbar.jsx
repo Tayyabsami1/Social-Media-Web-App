@@ -35,7 +35,7 @@ const Navbar = () => {
 
        {darkMode ?<WbSunnyOutlinedIcon className='icon' onClick={toggle}/>: <DarkModeOutlinedIcon className='icon' onClick={toggle}/> } 
         <HomeOutlinedIcon onClick={()=> navigate("/")} className='icon'/>
-        <Person2OutlinedIcon className='icon'/>
+        <Person2OutlinedIcon className='icon' onClick={()=>( navigate("/profile"))} />
         <MailOutlineOutlinedIcon onClick={()=>( navigate("/messages"))}  className='icon'/>
 
         <div className="user">

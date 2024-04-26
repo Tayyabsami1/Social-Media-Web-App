@@ -26,7 +26,7 @@ const Profile = () => {
       <div className="uInfo">
 
         <div className="center">
-          <span>Jane Doe</span>
+          <span>Abdul Ahad </span>
 
           <div className="info">
 
