@@ -1,5 +1,4 @@
 import Express from "express";
-import sql from "mssql";
 import cors from "cors";
 
 import userRoutes from "./Routes/users.js"
@@ -11,39 +10,9 @@ import messageRoutes from "./Routes/messages.js"
 
 const app = Express();
 
+// Middlewares
 app.use(cors());
 app.use(Express.json());
-
-
-const config = {
-    user: "tks",
-    password: "1234",
-    server: "TAYYAB-PC1234",
-    database: "SocialMediaDB",
-    options: {
-        trustServerCertificate: true,
-        trustedConnection: false,
-        enableArithAbort: true,
-        instancename: "SQLEXPRESS",
-    },
-    port: 1433
-}
-
-// ! Commented this because no longer using this DB
-// app.get('/Card', async (req, res) => {
-//     try {
-//         const pool = await sql.connect(config);
-//         const data = pool.request().query('select * from Card');
-//         data.then(res1 => {
-//             console.log(res1);
-//             return res.json(res1);
-//         })
-//     }
-//     catch (err) {
-//         console.log(err);
-//     }
-
-// })
 
 // ! This is also related to old db
 // TODO Make a youtube video about it 
