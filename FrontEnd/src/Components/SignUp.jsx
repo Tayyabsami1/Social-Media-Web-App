@@ -1,11 +1,12 @@
-import React from 'react'
 import '../Css/Signup.scss';
-import { Link,useNavigate } from 'react-router-dom'
-import {useState} from 'react';
+import { Link, useNavigate } from 'react-router-dom'
+import { useState } from 'react';
+import axios from "axios"
+import toast, { Toaster } from 'react-hot-toast';
 
 const SignUp = () => {
 
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const gradientColors = 'linear-gradient(45deg, #000036, #003087)';
   const initialSrc = 'https://img.icons8.com/ios/50/FFFFFF/visible--v1.png';
   // Other image source
@@ -13,7 +14,35 @@ const SignUp = () => {
 
   const [imageSrc, setImageSrc] = useState(initialSrc);
 
-  const [myinputype,setInputType]= useState('password');
+  const [myinputype, setInputType] = useState('password');
+
+  const [Inputs, setInputs] = useState({
+    Username: "",
+    Password: "",
+    Birthdate: "",
+    Email: "",
+  })
+
+  const [err,setErr]=useState(null);
+
+  const handleChange = (e) => {
+    setInputs(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  }
+  
+  const handelSignup = async e => {
+    e.preventDefault();
+    try {
+      await axios.post("http://localhost:3000/api/auth/signup", Inputs);
+    }
+
+    catch (err) {
+      console.log(err)
+      setErr(err.response.data);
+      toast.error(err.response.data);
+      return;
+    }
+    toast.success("User creation successful");
+  }
 
   // Function to handle image click and change the source
   const handleImageClick = () => {
@@ -43,10 +72,6 @@ const SignUp = () => {
     textShadow: '1px 1px 2px rgba(255, 255, 255, 0.8)', // Add a subtle text-shadow effect
   };
 
-  const handelSignup=()=>{
-    navigate('/')
-  }
-
 
   return (
     <>
@@ -58,19 +83,23 @@ const SignUp = () => {
           <form action="">
             <h1>Sign Up</h1>
             <div className="input-box">
-              <input type="text" placeholder='Username ' required />
+              <input type="text" placeholder='Username ' required name='Username' onChange={handleChange} />
               <img width="25" height="25" src="https://img.icons8.com/pastel-glyph/64/FFFFFF/user-male-circle.png" alt="user-male-circle" />
             </div>
             <div className="input-box">
-              <input type="email" placeholder='Email ' required />
+              <input type="email" placeholder='Email ' required name='Email' onChange={handleChange} />
               <img width="25" height="25" src="https://img.icons8.com/ios/50/FFFFFF/new-post--v1.png" alt="new-post--v1" />
             </div>
 
             <div className="input-box">
-              <input type={myinputype} placeholder='Password' />
-              <img width="25" height="25" onClick={handleImageClick}  src={imageSrc} alt="visible--v1" />
+              <input type={myinputype} placeholder='Password' name='Password' onChange={handleChange} />
+              <img width="25" height="25" onClick={handleImageClick} src={imageSrc} alt="visible--v1" />
             </div>
 
+            <div className="date-box">
+              <input type="date" placeholder='Birthday' name='Birthdate' onChange={handleChange} />
+            </div>
+          
             <button onClick={handelSignup} type='submit' className='btn'>Sign Up</button>
 
             <div className="register-link">

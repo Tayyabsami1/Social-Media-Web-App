@@ -1,5 +1,5 @@
-import React, { useContext } from 'react'
-import { useEffect, useState } from 'react'
+import  { useContext } from 'react'
+import  { Toaster } from 'react-hot-toast';
 import {
   createBrowserRouter,
   Navigate,
@@ -88,6 +88,7 @@ const App = () => {
 
   return (
     <>
+    <Toaster />
       <RouterProvider router={router} />
     </>
   )
