@@ -11,31 +11,39 @@ export const signup = async (req, res) => {
         myreq.input("Username", sql.VarChar(50), req.body.Username);
 
         // Checking if the User already exist or not 
-        let q = "select * from Users where username=@Username"
+        let q = "select * from Users where username=@Username";
 
-        const data = await myreq.query(q);
+        let data = await myreq.query(q);
 
         if (data.recordset.length)
             return res.status(409).json("User already exists");
+
+        myreq.input("Email", sql.VarChar(255), req.body.Email);
+        q = "select * from Users where email=@Email";
+
+        data = await myreq.query(q);
+
+        if (data.recordset.length)
+            return res.status(409).json("An account already exists with the same Email");
 
         // Hashing the Password 
         const salt = bcrypt.genSaltSync(10);
         const hashedpass = bcrypt.hashSync(req.body.Password, salt);
 
         myreq.input("Password", sql.VarChar(255), hashedpass);
-        myreq.input("Email", sql.VarChar(255), req.body.Email);
         myreq.input("Birthdate", sql.Date, req.body.Birthdate);
-
 
         q = "insert into Users (username,email,password,birthdate) values (@Username,@Email,@Password,@Birthdate)"
 
         try {
+
             myreq.query(q);
-            return res.status(200).json("User creation successful");
         }
         catch (err) {
+            console.log(err)
             return res.status(500).json(err);
         }
+        return res.status(200).json("User creation successful");
     }
 
     catch (err) {
@@ -66,9 +74,9 @@ export const login = async (req, res) => {
 
         const token = jwt.sign({ id: data.recordset[0].user_id }, "secretkey");
 
-        const {password,...others}=data.recordset[0];
+        const { password, ...others } = data.recordset[0];
 
-        return res.cookie("accessToke",token,{httpOnly:true}).status(200).json(others)
+        return res.cookie("accessToke", token, { httpOnly: true }).status(200).json(others)
     }
     catch (err) {
         return res.status(500).json(err);
@@ -76,8 +84,8 @@ export const login = async (req, res) => {
 }
 
 export const logout = (req, res) => {
-    res.clearCookie("accesstoken",{
-        secure:true,
-        sameSite:"none"
+    res.clearCookie("accesstoken", {
+        secure: true,
+        sameSite: "none"
     }).status(200).json("User Logged out")
 }

@@ -23,25 +23,36 @@ const SignUp = () => {
     Email: "",
   })
 
-  const [err,setErr]=useState(null);
+  const [err, setErr] = useState(null);
 
   const handleChange = (e) => {
     setInputs(prev => ({ ...prev, [e.target.name]: e.target.value }));
   }
-  
+
   const handelSignup = async e => {
+
     e.preventDefault();
-    try {
-      await axios.post("http://localhost:3000/api/auth/signup", Inputs);
+    if (Inputs.Username.length && Inputs.Email.length && Inputs.Password.length && Inputs.Birthdate.length) {
+
+      try {
+        await axios.post("http://localhost:3000/api/auth/signup", Inputs, {
+          withCredentials: true
+        });
+        navigate("/");
+      }
+
+      catch (err) {
+        console.log(err)
+        setErr(err.response.data);
+        toast.error(err.response.data);
+        return;
+      }
+      toast.success("User creation successful");
     }
 
-    catch (err) {
-      console.log(err)
-      setErr(err.response.data);
-      toast.error(err.response.data);
-      return;
+    else {
+      toast.error("Please fill all the fields")
     }
-    toast.success("User creation successful");
   }
 
   // Function to handle image click and change the source
@@ -99,7 +110,7 @@ const SignUp = () => {
             <div className="date-box">
               <input type="date" placeholder='Birthday' name='Birthdate' onChange={handleChange} />
             </div>
-          
+
             <button onClick={handelSignup} type='submit' className='btn'>Sign Up</button>
 
             <div className="register-link">

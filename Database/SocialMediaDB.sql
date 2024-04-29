@@ -24,7 +24,6 @@ drop table Users
 select * from Users
 
 
-
 -- Written by Imran
 CREATE TABLE Posts (
     post_id INT IDENTITY(1,1) PRIMARY KEY,
