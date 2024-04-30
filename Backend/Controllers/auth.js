@@ -76,7 +76,7 @@ export const login = async (req, res) => {
 
         const { password, ...others } = data.recordset[0];
 
-        return res.cookie("accessToke", token, { httpOnly: true }).status(200).json(others)
+        return res.cookie("accessToken", token, { httpOnly: true }).status(200).json(others)
     }
     catch (err) {
         return res.status(500).json(err);

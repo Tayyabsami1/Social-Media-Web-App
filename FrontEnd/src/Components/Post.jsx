@@ -1,11 +1,12 @@
-import  { useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import '../Css/Post.scss'
 import { FavoriteBorderOutlined, FavoriteOutlined, MoreHoriz, ShareOutlined, TextsmsOutlined } from '@mui/icons-material'
 import Comments from './Comments'
 const Post = ({ post }) => {
 
-    const [CommentsOpen, setCommentsOpen]=useState(false);
+    const [CommentsOpen, setCommentsOpen] = useState(false);
+
     const postLiked = false;
     return (
         <div className="post">
@@ -14,13 +15,13 @@ const Post = ({ post }) => {
                 <div className="user">
 
                     <div className="userinfo">
-                        <img src={post.profilePic} alt="" />
+                        <img src={post.profile_picture} alt="" />
 
                         <div className="details">
                             <Link to={`/Profile/${post.userId}`} style={{ textDecoration: "none", color: "inherit" }}>
-                                <span className='name'>{post.name}</span>
+                                <span className='name'>{post.username}</span>
                             </Link>
-                            <span className='date'>1 min ago </span>
+                            <span className='date'>{post.timestamp}</span>
                         </div>
 
                     </div>
@@ -29,7 +30,7 @@ const Post = ({ post }) => {
                 </div>
 
                 <div className="content">
-                    <p>{post.desc}</p>
+                    <p>{post.content}</p>
                     <img src={post.profilePic} alt="" />
                 </div>
 
@@ -41,16 +42,16 @@ const Post = ({ post }) => {
                     </div>
 
                     <div className="item">
-                        <TextsmsOutlined onClick={()=>setCommentsOpen(!CommentsOpen)}/>
+                        <TextsmsOutlined onClick={() => setCommentsOpen(!CommentsOpen)} />
                         <span>69 Comments</span>
                     </div>
 
                     <div className="item">
-                        <ShareOutlined/>
+                        <ShareOutlined />
                         <span>Share</span>
                     </div>
                 </div>
-           {CommentsOpen&&<Comments/>}
+                {CommentsOpen && <Comments />}
             </div>
         </div>
     )

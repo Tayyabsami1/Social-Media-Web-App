@@ -38,11 +38,10 @@ const SignUp = () => {
         await axios.post("http://localhost:3000/api/auth/signup", Inputs, {
           withCredentials: true
         });
-        navigate("/");
+        navigate("/login");
       }
 
       catch (err) {
-        console.log(err)
         setErr(err.response.data);
         toast.error(err.response.data);
         return;

@@ -2,6 +2,8 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { DarkModeContext } from '../Context/darkModeContext';
+import { AuthContext } from "../Context/AuthContext"
+
 
 import '../Css/Navbar.scss'
 
@@ -18,7 +20,9 @@ import mypic from '../assets/mypic.png'
 const Navbar = () => {
 
   const { toggle, darkMode } = useContext(DarkModeContext);
+  const { currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
+  
   return (
     <>
       <div className="Navbar">
@@ -45,7 +49,7 @@ const Navbar = () => {
 
           <div className="user" onClick={() => (navigate("/profile"))}>
             <img src={mypic} alt="" />
-            <span>Tayyab Sami</span>
+            <span>{currentUser.username}</span>
           </div>
         </div>
       </div>

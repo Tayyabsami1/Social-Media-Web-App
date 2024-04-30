@@ -1,5 +1,6 @@
-import  { useContext } from 'react'
-import  { Toaster } from 'react-hot-toast';
+import { useContext } from 'react'
+import { Toaster } from 'react-hot-toast';
+
 import {
   createBrowserRouter,
   Navigate,
@@ -21,6 +22,11 @@ import './App.scss'
 import Messages from './Components/Messages';
 import Friends from './Components/Friends';
 
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'  
+
 const App = () => {
 
   // const [data, setData] = useState([]);
@@ -31,9 +37,11 @@ const App = () => {
 
   const user = useContext(AuthContext);
   const { darkMode } = useContext(DarkModeContext);
+  const queryClient = new QueryClient()
 
   const Layout = () => {
     return (
+      <QueryClientProvider   client={queryClient}>
       <div className={`theme-${darkMode ? "dark" : "light"} `}>
         <Navbar />
         <div style={{ display: "flex" }} className='mainbody'>
@@ -43,6 +51,7 @@ const App = () => {
           <Rightbar />
         </div>
       </div>
+      </QueryClientProvider>
     )
   }
 
@@ -71,7 +80,7 @@ const App = () => {
       },
       {
         path: "/Friends",
-        element: <Friends/>
+        element: <Friends />
       }
       ]
     },
@@ -88,7 +97,7 @@ const App = () => {
 
   return (
     <>
-    <Toaster />
+      <Toaster />
       <RouterProvider router={router} />
     </>
   )
