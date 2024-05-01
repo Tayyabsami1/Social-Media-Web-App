@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import moment from 'moment'
+
 import '../Css/Post.scss'
 import { FavoriteBorderOutlined, FavoriteOutlined, MoreHoriz, ShareOutlined, TextsmsOutlined } from '@mui/icons-material'
 import Comments from './Comments'
@@ -8,6 +10,7 @@ const Post = ({ post }) => {
     const [CommentsOpen, setCommentsOpen] = useState(false);
 
     const postLiked = false;
+    console.log(post.media_url)
     return (
         <div className="post">
             <div className="container">
@@ -21,7 +24,7 @@ const Post = ({ post }) => {
                             <Link to={`/Profile/${post.userId}`} style={{ textDecoration: "none", color: "inherit" }}>
                                 <span className='name'>{post.username}</span>
                             </Link>
-                            <span className='date'>{post.timestamp}</span>
+                            <span className='date'>{moment(post.timestamp).fromNow()}</span>
                         </div>
 
                     </div>
@@ -31,7 +34,7 @@ const Post = ({ post }) => {
 
                 <div className="content">
                     <p>{post.content}</p>
-                    <img src={post.profilePic} alt="" />
+                    <img src={"../../public/Uploads/"+post.media_url} alt="" />
                 </div>
 
                 <div className="info">

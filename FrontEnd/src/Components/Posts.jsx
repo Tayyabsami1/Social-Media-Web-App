@@ -20,7 +20,6 @@ const Posts = () => {
             return res.data;
         }
     })
-
     return (
         <div className='Posts'>
             <Share/>

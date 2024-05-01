@@ -5,10 +5,11 @@ import Friend from "../assets/friend.png";
 import { useContext, useState } from "react";
 import { AuthContext } from "../Context/AuthContext";
 import {
-    useQuery,
     useMutation,
     useQueryClient
 } from '@tanstack/react-query'
+
+import toast from "react-hot-toast";
 
 import { MakeRequest } from '../../axios';
 const Share = () => {
@@ -16,7 +17,7 @@ const Share = () => {
     const [desc, setDesc] = useState("");
     const { currentUser } = useContext(AuthContext);
 
-    const upload = async () => { 
+    const upload = async () => {
         try {
             const formData = new FormData();
             formData.append("file", file);
@@ -43,10 +44,12 @@ const Share = () => {
 
 
     const handleClick = async (e) => {
+        if (!desc.length)
+            return toast.error("Please write some description");
         e.preventDefault();
         let imgUrl = "";
         if (file) imgUrl = await upload();
-        mutation.mutate({ Content: desc });
+        mutation.mutate({ Content: desc, Media_url: imgUrl });
         setDesc("");
         setFile(null);
     };
@@ -67,7 +70,7 @@ const Share = () => {
                     </div>
                     <div className="right">
                         {file && (
-                            <img className="file" alt="" src="" />
+                            <img className="file" alt="" src={URL.createObjectURL(file)} />
                         )}
                     </div>
                 </div>
