@@ -3,6 +3,8 @@ import {
     useQuery,
 } from '@tanstack/react-query'
 
+import toast from 'react-hot-toast'
+
 import { MakeRequest } from '../../axios';
 
 import Share from './Share';
@@ -15,22 +17,30 @@ const Posts = () => {
 
         queryFn: async () => {
             const res = await MakeRequest.get("/posts");
-            console.log(res)
             return res.data;
         }
     })
 
     return (
         <div className='Posts'>
-            <Share />
+            <Share/>
             {
-                error ? <h3>Something went Wrong</h3> : (
-                    isPending ? <h3>Loading Posts...</h3> :
-                        data.map(post => (
+            error ? (
+                toast.error("An Error occured. Try to Login again")
+            ) : (
+                isPending ? (
+                    toast.loading("Loading Posts")
+                ) : (
+                    <>
+                        {data.map((post) => (
                             <Post post={post} key={post.post_id} />
-                        ))
+                        ))}
+                        {toast.dismiss()}
+                    </>
                 )
+            )
             }
+
         </div>
     )
 }

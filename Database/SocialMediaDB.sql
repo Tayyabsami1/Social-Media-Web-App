@@ -37,6 +37,18 @@ CREATE TABLE Posts (
     FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE
 );
 
+--Written by Saad
+CREATE TABLE Messages (
+    message_id INT IDENTITY(1,1) PRIMARY KEY,
+    sender_id INT NOT NULL,
+    receiver_id INT NOT NULL,
+    content NVARCHAR(MAX) NOT NULL,
+    sent_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (sender_id) REFERENCES Users(user_id),
+    FOREIGN KEY (receiver_id) REFERENCES Users(user_id)
+);
+
+
  drop table Posts
 insert  into Posts(user_id,content,post_type) values(2,'Hello G','Video')
 
@@ -49,5 +61,10 @@ create table Friends(
 select * from Users
 select * from Friends
 select * from Posts
+select * from Messages
 
-insert into Friends(friend_id_1,friend_id_2) values(8,1)
+insert into Friends(friend_id_1,friend_id_2) values(5,4)
+INSERT INTO Messages (sender_id, receiver_id, content)
+VALUES 
+(1, 2, 'Hey Jane'),
+(2, 1, 'Hi John');

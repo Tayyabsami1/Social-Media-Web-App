@@ -71,11 +71,14 @@ export const login = async (req, res) => {
 
         if (!checkPass)
             return res.status(400).json("Wrong Username or Password");
-
+        
+        // creating an Authentication token on the basis of User Id will be further used to authenticate user to 
+        // create and view posts 
         const token = jwt.sign({ id: data.recordset[0].user_id }, "secretkey");
 
+        // Destructuring data from User table
         const { password, ...others } = data.recordset[0];
-
+        //saving a cookie named access toeken containing my secure token and user data without password
         return res.cookie("accessToken", token, { httpOnly: true }).status(200).json(others)
     }
     catch (err) {

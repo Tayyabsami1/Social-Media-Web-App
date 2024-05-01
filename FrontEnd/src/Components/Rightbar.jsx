@@ -1,4 +1,3 @@
-import React from 'react'
 import '../Css/Rightbar.scss'
 import mypic from '../assets/mypic.png'
 

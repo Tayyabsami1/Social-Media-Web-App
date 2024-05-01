@@ -10,9 +10,11 @@ export const AuthContextProvider = ({ children }) => {
 
 
     const login =async (inputs) => {
+        // In response we get the User data 
         const res =await axios.post("http://localhost:3000/api/auth/login",inputs,{
             withCredentials:true,
         });
+        // We set the User in our local storage
         setcurrentUser(res.data);
     };
 
