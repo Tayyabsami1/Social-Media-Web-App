@@ -10,7 +10,6 @@ const Post = ({ post }) => {
     const [CommentsOpen, setCommentsOpen] = useState(false);
 
     const postLiked = false;
-    console.log(post.media_url)
     return (
         <div className="post">
             <div className="container">

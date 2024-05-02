@@ -78,3 +78,17 @@ CREATE TABLE Requests (
     FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE ON UPDATE NO ACTION,
     FOREIGN KEY (requester_id) REFERENCES Users(user_id) ON DELETE CASCADE ON UPDATE NO ACTION
 );
+
+create table Comments (
+	comment_id INT IDENTITY(1,1) primary key,
+    user_id INT NOT NULL,
+	post_id INT NOT NULL,
+    content TEXT NOT NULL,
+	FOREIGN KEY (user_id) REFERENCES Users(user_id) ,
+	FOREIGN KEY (post_id) references Posts(post_id) ,
+    ctimestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+)
+
+select * from Comments
+insert into Comments(user_id,post_id,content ) values(9,4,'sexy girl')
+delete from Friends

@@ -33,17 +33,6 @@ app.use(cookieParser());
 //         const pool = await sql.connect(config);
 //         const data = pool.request().input('parameter', sql.VarChar, req.params.cardNum).query("select * from card where cardNum=@parameter");
 
-//         data.then(res1 => {
-//             return res.json(res1.recordset);
-//         }
-//         )
-
-//     }
-//     catch (err) {
-//         console.log(err);
-//     }
-// })
-
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, '../FrontEnd/public/Uploads')

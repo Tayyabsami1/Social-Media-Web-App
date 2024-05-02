@@ -30,9 +30,6 @@ export const getPosts = async (req, res) => {
             return res.status(500).json(err);
         }
     })
-
-
-
 }
 
 export const addPost = async (req, res) => {
@@ -63,7 +60,4 @@ export const addPost = async (req, res) => {
         return res.status(200).json("Post Creation Successful");
 
     })
-
-
-
 }
