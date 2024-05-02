@@ -1,6 +1,6 @@
 create database SocialMediaDB;
 use SocialMediaDB;
-
+drop database SocialMediaDB
 --Written by Imran
 CREATE TABLE Users (
     user_id INT IDENTITY(1,1) PRIMARY KEY,
@@ -32,9 +32,6 @@ CREATE TABLE Posts (
     post_type VARCHAR(10) ,
     media_url VARCHAR(255),
     timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
-    --privacy VARCHAR(10) NOT NULL,
-    --CONSTRAINT CHK_Post_Type CHECK (post_type IN ('text', 'photo', 'video')),
-    --CONSTRAINT CHK_Privacy_Type CHECK (privacy IN ('public', 'friends', 'private')),
     FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE
 );
 
@@ -49,26 +46,23 @@ CREATE TABLE Messages (
     FOREIGN KEY (receiver_id) REFERENCES Users(user_id)
 );
 
+create table Comments (
+	comment_id INT IDENTITY(1,1) primary key,
+    user_id INT NOT NULL,
+	post_id INT NOT NULL,
+    content TEXT NOT NULL,
+	FOREIGN KEY (user_id) REFERENCES Users(user_id) ,
+	FOREIGN KEY (post_id) references Posts(post_id) ,
+    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+)
 
-insert  into Posts(user_id,content,post_type) values(2,'Hello G','Video')
+
 
 create table Friends(
 	 Friend_id INT IDENTITY(1,1) PRIMARY KEY,
 	friend_id_1 INT FOREIGN KEY REFERENCES Users(user_id),
 	friend_id_2 INT FOREIGN KEY REFERENCES Users(user_id),
 );
-
-select * from Users
-select * from Friends
-select * from Posts
-
-select * from Messages
-
-insert into Friends(friend_id_1,friend_id_2) values(5,4)
-INSERT INTO Messages (sender_id, receiver_id, content)
-VALUES 
-(1, 2, 'Hey Jane'),
-(2, 1, 'Hi John');
 
 CREATE TABLE Requests (
     request_id INT IDENTITY(1,1) PRIMARY KEY,
@@ -79,16 +73,33 @@ CREATE TABLE Requests (
     FOREIGN KEY (requester_id) REFERENCES Users(user_id) ON DELETE CASCADE ON UPDATE NO ACTION
 );
 
-create table Comments (
-	comment_id INT IDENTITY(1,1) primary key,
-    user_id INT NOT NULL,
-	post_id INT NOT NULL,
-    content TEXT NOT NULL,
-	FOREIGN KEY (user_id) REFERENCES Users(user_id) ,
-	FOREIGN KEY (post_id) references Posts(post_id) ,
-    ctimestamp DATETIME DEFAULT CURRENT_TIMESTAMP
-)
+select * from Users
+drop table Users
+
+select * from Friends
+drop table Friends
+
+select * from Posts
+drop table Posts
+
+select * from Messages
+drop table Messages
 
 select * from Comments
+drop table Comments
+
+insert into Friends(friend_id_1,friend_id_2) values(5,4)
+INSERT INTO Messages (sender_id, receiver_id, content)
+VALUES 
+(1, 2, 'Hey Jane'),
+(2, 1, 'Hi John');
+
+insert  into Posts(user_id,content,post_type) values(2,'Hello G','Video')
+
+
+
+
+
+
+
 insert into Comments(user_id,post_id,content ) values(9,4,'sexy girl')
-delete from Friends
