@@ -3,7 +3,6 @@ import sql from "mssql"
 
 export const getComments = async (req, res) => {
     const myreq = db.request();
-
     myreq.input("postId", sql.Int, req.params.postId)
     let q = "select c.*,u.user_id as UserId, u.username,u.profile_picture from Comments as c  join Users as u on c.user_id=u.user_id where c.post_Id=@postId order by c.timestamp desc";
 

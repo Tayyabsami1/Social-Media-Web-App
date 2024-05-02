@@ -69,26 +69,25 @@ CREATE TABLE Requests (
     user_id INT NOT NULL,
     requester_id INT NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE ON UPDATE NO ACTION,
-    FOREIGN KEY (requester_id) REFERENCES Users(user_id) ON DELETE CASCADE ON UPDATE NO ACTION
+    FOREIGN KEY (user_id) REFERENCES Users(user_id) ,
+    FOREIGN KEY (requester_id) REFERENCES Users(user_id),
 );
 
-select * from Users
 drop table Users
-
-select * from Friends
 drop table Friends
-
-select * from Posts
 drop table Posts
-
-select * from Messages
 drop table Messages
-
-select * from Comments
 drop table Comments
 
-insert into Friends(friend_id_1,friend_id_2) values(5,4)
+
+select * from Users
+select * from Friends
+select * from Posts
+select * from Messages
+select * from Comments
+select * from Requests
+
+insert into Friends(friend_id_1,friend_id_2) values(1,2)
 INSERT INTO Messages (sender_id, receiver_id, content)
 VALUES 
 (1, 2, 'Hey Jane'),
@@ -96,10 +95,4 @@ VALUES
 
 insert  into Posts(user_id,content,post_type) values(2,'Hello G','Video')
 
-
-
-
-
-
-
-insert into Comments(user_id,post_id,content ) values(9,4,'sexy girl')
+insert into Comments(user_id,post_id,content ) values(2,2,'Great work bro')

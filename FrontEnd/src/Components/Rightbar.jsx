@@ -232,7 +232,7 @@ const Rightbar = () => {
                 <div className="item">
                     <span>Friend Request List</span>
                     {friendRequests.length === 0 ? (
-                        <div>No requests</div>
+                        <div style={{color:"white",margin:"20px"}}>No requests</div>
                     ) : (
                         friendRequests.map(request => (
                             <div key={request.request_id} className="user">

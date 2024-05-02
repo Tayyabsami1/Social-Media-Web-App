@@ -26,6 +26,7 @@ const Comments = ({ postId }) => {
                 <input type="text" placeholder='Write a comment' />
                 <button>Send</button>
             </div>
+            
             { error? "Error Occured" :(isPending?"Loading...": data.map(comment => (
                 <div className="comment" key={postId}>
 
