@@ -185,6 +185,8 @@ const Rightbar = () => {
             // Remove accepted request from UI
             setFriendRequests(prevRequests => prevRequests.filter(request => request.user_id !== requestId));
             toast.success("Friend request Accepted")
+            const updatedProfiles = suggestedProfiles.filter(request => request.user_id !== requestId);
+            setSuggestedProfiles(updatedProfiles);
         } catch (error) {
             console.error('Error accepting friend request:', error);
         }

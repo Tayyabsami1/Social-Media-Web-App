@@ -22,7 +22,7 @@ export const FriendsOfFriends = async (req, res) => {
                        FROM Friends 
                        WHERE friend_id_2 = @userId
                    )
-                   AND friend_id_2 != @userId 
+                   AND friend_id_2 != @userId AND friend_id_2 NOT IN( Select friend_id_1 from Friends where friend_id_2=@userId UNION  Select friend_id_2 from Friends where friend_id_1=@userId)
                    UNION
                    SELECT DISTINCT friend_id_1 
                    FROM Friends 
@@ -35,7 +35,7 @@ export const FriendsOfFriends = async (req, res) => {
                        FROM Friends 
                        WHERE friend_id_2 = @userId
                    )
-                   AND friend_id_1 != @userId` 
+                   AND friend_id_1 != @userId AND friend_id_1 NOT IN( Select friend_id_1 from Friends where friend_id_2=@userId UNION  Select friend_id_2 from Friends where friend_id_1=@userId)` 
                     
                 );
         //console.log(data.recordset);
