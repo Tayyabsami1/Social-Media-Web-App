@@ -151,7 +151,7 @@ const Rightbar = () => {
 
     async function handleAddFriend(profileId) {
         try {
-            await fetch(`http://localhost:3000/api/Suggestions/send-friend-request/${profileId}`,
+            await fetch(`http://localhost:3000/api/Suggestions/send-friend-request/${profileId}/${loggedInUserId}`,
                 {
                     method: 'POST',
                 });
@@ -176,15 +176,20 @@ const Rightbar = () => {
 
     async function handleAcceptFriendRequest(requestId) {
         try {
+            // Make the POST request to accept the friend request
             await fetch(`http://localhost:3000/api/FriendsR/accept-friend-request/${requestId}`, {
                 method: 'POST',
             });
+           
+    
             // Remove accepted request from UI
-            setFriendRequests(prevRequests => prevRequests.filter(request => request.request_id !== requestId));
+            setFriendRequests(prevRequests => prevRequests.filter(request => request.user_id !== requestId));
+            toast.success("Friend request Accepted")
         } catch (error) {
             console.error('Error accepting friend request:', error);
         }
     }
+
 
     async function handleDeclineFriendRequest(requestId) {
         try {
@@ -235,8 +240,8 @@ const Rightbar = () => {
                                     <span>{request.username}</span>
                                 </div>
                                 <div className="buttons">
-                                    <button onClick={() => handleAcceptFriendRequest(request.request_id)}>Accept</button>
-                                    <button onClick={() => handleDeclineFriendRequest(request.request_id)}>Decline</button>
+                                    <button onClick={() => handleAcceptFriendRequest(request.user_id)}>Accept</button>
+                                    <button onClick={() => handleDeclineFriendRequest(request.user_id)}>Decline</button>
                                 </div>
                             </div>
                         ))

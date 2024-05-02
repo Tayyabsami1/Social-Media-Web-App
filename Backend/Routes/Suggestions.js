@@ -7,6 +7,6 @@ const router=Express.Router();
 router.get("/friends-of-friends/:userId",FriendsOfFriends);
 router.get("/profiles/:userIds",profiles);
 router.get("/other-users/:userId",otherusers);
-router.post("/send-friend-request/:profileId",SendRequest);
+router.post("/send-friend-request/:profileId/:loggedInUserId",SendRequest);
 
 export default router;

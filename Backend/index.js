@@ -10,6 +10,7 @@ import messageRoutes from "./Routes/messages.js"
 import cookieParser from "cookie-parser";
 import multer from "multer";
 import SuggestionRoutes from "./Routes/Suggestions.js"
+import FriendsRRoutes from "./Routes/FriendsR.js"
 
 const app = Express();
 
@@ -61,7 +62,7 @@ app.use("/api/likes",likeRoutes);
 app.use("/api/comments",commentRoutes);
 app.use("/api/messages",messageRoutes);
 app.use("/api/Suggestions",SuggestionRoutes)
-
+app.use("/api/FriendsR",FriendsRRoutes)
 app.post("/api/upload",upload.single("file"),(req,res)=>{
     const file=req.file;
     return res.status(200).json(file.filename);
