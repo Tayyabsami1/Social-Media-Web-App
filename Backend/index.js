@@ -9,6 +9,7 @@ import commentRoutes from "./Routes/comments.js"
 import messageRoutes from "./Routes/messages.js"
 import cookieParser from "cookie-parser";
 import multer from "multer";
+import SuggestionRoutes from "./Routes/Suggestions.js"
 
 const app = Express();
 
@@ -59,6 +60,7 @@ app.use("/api/posts",postRoutes);
 app.use("/api/likes",likeRoutes);
 app.use("/api/comments",commentRoutes);
 app.use("/api/messages",messageRoutes);
+app.use("/api/Suggestions",SuggestionRoutes)
 
 app.post("/api/upload",upload.single("file"),(req,res)=>{
     const file=req.file;

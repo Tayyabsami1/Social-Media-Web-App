@@ -3,15 +3,15 @@ import sql from "mssql";
 import cors from "cors";
 
 const config = {
-    user: "tks",
+    user: "ahad",
     password: "1234",
-    server: "TAYYAB-PC1234",
-    database: "SocialMediaDB",
+    server: "DESKTOP-Q3M4KLE",
+    database: "SocialMediaDB1",
     options: {
         trustServerCertificate: true,
         trustedConnection: false,
         enableArithAbort: true,
-        instancename: "SQLEXPRESS",
+        instancename: "MSSQLSERVER",
     },
     port: 1433
 }

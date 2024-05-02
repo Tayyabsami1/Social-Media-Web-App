@@ -70,3 +70,11 @@ VALUES
 (1, 2, 'Hey Jane'),
 (2, 1, 'Hi John');
 
+CREATE TABLE Requests (
+    request_id INT IDENTITY(1,1) PRIMARY KEY,
+    user_id INT NOT NULL,
+    requester_id INT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE ON UPDATE NO ACTION,
+    FOREIGN KEY (requester_id) REFERENCES Users(user_id) ON DELETE CASCADE ON UPDATE NO ACTION
+);
