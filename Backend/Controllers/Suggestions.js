@@ -56,7 +56,8 @@ export const profiles = async (req, res) => {
         const request = db.request();
         const query = `SELECT user_id, username, profile_picture
                         FROM Users 
-                        WHERE user_id IN (${userIds.map(id => '@id' + id).join(',')})`;
+                        WHERE user_id IN (${userIds.map(id => '@id' + id).join(',')})
+                        Order by username`;
 
 
         // Add parameters to the request
@@ -94,7 +95,7 @@ export const otherusers = async (req, res) => {
                         FROM Friends
                         WHERE friend_id_1=@userId
                     )
-                    `);
+                    Order by username`);
         return res.json(result.recordset);
     } catch (error) {
         console.error('Error fetching other users:', error);

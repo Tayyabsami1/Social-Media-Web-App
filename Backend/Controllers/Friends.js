@@ -21,7 +21,8 @@ export const FriendsList =  async (req, res) => {
                     SELECT u.user_id, u.username, u.profile_picture
                     FROM Friends f
                     INNER JOIN Users u ON f.friend_id_1 = u.user_id
-                    WHERE f.friend_id_2 = @userId`);
+                    WHERE f.friend_id_2 = @userId
+                    Order by u.username`);
                     //console.log(result.recordset);
         return res.json(result.recordset);
 

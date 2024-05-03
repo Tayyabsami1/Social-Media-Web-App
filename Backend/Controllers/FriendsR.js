@@ -15,7 +15,8 @@ export const FriendRequests = async (req, res) => {
             .query(`SELECT distinct u.user_id, u.username, u.profile_picture
             FROM Requests r
             INNER JOIN Users u ON r.requester_id = u.user_id
-            WHERE r.user_id =@userId`);
+            WHERE r.user_id =@userId
+            Order by u.username`);
         return res.json(result.recordset);
     } catch (error) {
         console.error('Error fetching friend requests:', error);
