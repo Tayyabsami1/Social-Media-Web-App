@@ -1,7 +1,7 @@
 import React from 'react'
 import '../Css/Rightbar.scss'
 import mypic from '../assets/mypic.png'
-import { useState, useEffect,useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../Context/AuthContext'
 import toast from "react-hot-toast"
 
@@ -23,7 +23,16 @@ import toast from "react-hot-toast"
 
 //                     </div>
 //                 </div>
+//                 <div className="item">
+//                     <span>Your Friends</span>
+//                     <div className="user">
+//                         <div className="userinfo">
+//                             <img src={mypic} alt="" />
+//                             <span>Tayyab Sami</span>
+//                         </div>
 
+//                     </div>
+//                 </div>
 //                 <div className="item">
 //                     <span>Latest Activities</span>
 //                     <div className="user">
@@ -112,6 +121,7 @@ const Rightbar = () => {
     const { currentUser } = useContext(AuthContext);
     const [suggestedProfiles, setSuggestedProfiles] = useState([]);
     const [friendRequests, setFriendRequests] = useState([]);
+    const [friends, setFriends] = useState([]);
     const loggedInUserId = currentUser.user_id;
     // const loggedInUserId = 1;
 
@@ -147,6 +157,18 @@ const Rightbar = () => {
         }
 
         fetchFriendRequests();
+
+        async function fetchFriends() {
+            try {
+                const response = await fetch(`http://localhost:3000/api/Friends/friends/${loggedInUserId}`);
+                const data = await response.json();
+                setFriends(data);
+            } catch (error) {
+                console.error('Error fetching friends:', error);
+            }
+        }
+
+        fetchFriends();
     }, [loggedInUserId]);
 
     async function handleAddFriend(profileId) {
@@ -155,7 +177,7 @@ const Rightbar = () => {
                 {
                     method: 'POST',
                 });
-                toast.success("Friend request sent")
+            toast.success("Friend request sent")
             // Update UI to indicate request sent
             const updatedProfiles = suggestedProfiles.map(profile => {
                 if (profile.user_id === profileId) {
@@ -180,13 +202,17 @@ const Rightbar = () => {
             await fetch(`http://localhost:3000/api/FriendsR/accept-friend-request/${requestId}`, {
                 method: 'POST',
             });
-           
-    
+
+
             // Remove accepted request from UI
             setFriendRequests(prevRequests => prevRequests.filter(request => request.user_id !== requestId));
             toast.success("Friend request Accepted")
             const updatedProfiles = suggestedProfiles.filter(request => request.user_id !== requestId);
             setSuggestedProfiles(updatedProfiles);
+            const response = await fetch(`http://localhost:3000/api/Friends/friends/${loggedInUserId}`);
+            const data = await response.json();
+            setFriends(data);
+
         } catch (error) {
             console.error('Error accepting friend request:', error);
         }
@@ -233,7 +259,7 @@ const Rightbar = () => {
                 <div className="item">
                     <span>Friend Request List</span>
                     {friendRequests.length === 0 ? (
-                        <div style={{color:"white",margin:"20px"}}>No requests</div>
+                        <div style={{ color: "white", margin: "20px" }}>No Requests</div>
                     ) : (
                         friendRequests.map(request => (
                             <div key={request.request_id} className="user">
@@ -245,6 +271,22 @@ const Rightbar = () => {
                                 <div className="buttons">
                                     <button onClick={() => handleAcceptFriendRequest(request.user_id)}>Accept</button>
                                     <button onClick={() => handleDeclineFriendRequest(request.user_id)}>Decline</button>
+                                </div>
+                            </div>
+                        ))
+                    )}
+                </div>
+                <div className="item">
+                    <span>Your Friends</span>
+                    {friends.length === 0 ? (
+                        <div style={{ color: "white", margin: "20px" }}>No Friends</div>
+                    ) : (
+                        friends.map(friend => (
+                            <div key={friend.user_id} className="user">
+                                <div className="userinfo">
+                                    {/* <img src={friend.profile_picture} alt="" /> */}
+                                    <img src={mypic} alt="" />
+                                    <span>{friend.username}</span>
                                 </div>
                             </div>
                         ))

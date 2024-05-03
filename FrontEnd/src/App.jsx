@@ -20,7 +20,6 @@ import { DarkModeContext } from './Context/darkModeContext';
 import { AuthContext } from './Context/AuthContext';
 import './App.scss'
 import Messages from './Components/Messages';
-import Friends from './Components/Friends';
 
 import {
   QueryClient,
@@ -77,10 +76,6 @@ const App = () => {
       {
         path: "/Messages",
         element: <Messages />
-      },
-      {
-        path: "/Friends",
-        element: <Friends />
       }
       ]
     },
