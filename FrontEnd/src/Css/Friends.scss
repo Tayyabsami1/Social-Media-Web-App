@@ -1,7 +1,0 @@
-@import '../Styles.scss';
-
-.Friends{
-    @include themify($themes) {
-        background-color: red;
-    }
-}

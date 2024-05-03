@@ -199,7 +199,8 @@ const Rightbar = () => {
                 method: 'DELETE',
             });
             // Remove declined request from UI
-            setFriendRequests(prevRequests => prevRequests.filter(request => request.request_id !== requestId));
+            setFriendRequests(prevRequests => prevRequests.filter(request => request.user_id !== requestId));
+            toast.success("Friend request Declined")
         } catch (error) {
             console.error('Error declining friend request:', error);
         }

@@ -51,7 +51,7 @@ export const DeclineRequests = async (req, res) => {
         // const pool = await sql.connect(config);
         const request = db.request();
         await request.input('requestId', sql.Int, requestId)
-            .query(`DELETE FROM Requests WHERE request_id = @requestId`);
+            .query(`DELETE FROM Requests WHERE requester_id = @requestId`);
         return res.json({ message: 'Friend request declined successfully' });
     } catch (error) {
         console.error('Error declining friend request:', error);
