@@ -4,9 +4,9 @@ import sql from "mssql";
 import moment from "moment"
 
 export const getPosts = async (req, res) => {
-
     // ! Authrnticate User Logic
     // getting the token from our cookies 
+    const user_id=req.params.user_id
     const token = req.cookies.accessToken;
     if (!token) {
         return res.status(400).json("User not authenticated");
@@ -42,19 +42,19 @@ export const addPost = async (req, res) => {
     jwt.verify(token, "secretkey", async (err, userInfo) => {
         if (err)
             return res.status(403).json("Your Token is Invalid ");
-    
-        let q="insert into Posts(user_id,content,media_url,timestamp) values(@User_id,@Content,@Media_url,@timestamp)";
 
-        
+        let q = "insert into Posts(user_id,content,media_url,timestamp) values(@User_id,@Content,@Media_url,@timestamp)";
+
+
         const myreq = db.request();
 
-        myreq.input("Content",sql.Text,req.body.Content);
-        myreq.input("User_id",sql.Int,userInfo.id);
-        myreq.input("Media_url",sql.VarChar(255), req.body.Media_url);
-       myreq.input("timestamp",sql.DateTime, moment(Date.now()).format("YYYY-MM-DD HH:mm:ss")) 
+        myreq.input("Content", sql.Text, req.body.Content);
+        myreq.input("User_id", sql.Int, userInfo.id);
+        myreq.input("Media_url", sql.VarChar(255), req.body.Media_url);
+        myreq.input("timestamp", sql.DateTime, moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"))
 
-        if(err)
-        return res.json(500).json(err);
+        if (err)
+            return res.json(500).json(err);
 
         const data = await myreq.query(q);
         return res.status(200).json("Post Creation Successful");

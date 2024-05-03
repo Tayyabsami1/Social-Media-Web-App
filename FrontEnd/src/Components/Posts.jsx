@@ -8,36 +8,41 @@ import toast from 'react-hot-toast'
 import { MakeRequest } from '../../axios';
 
 import Share from './Share';
+import { useContext, useState } from 'react';
+import { AuthContext } from '../Context/AuthContext';
 
 const Posts = () => {
 
+    const { currentUser } = useContext(AuthContext);
+   
 
     const { isPending, error, data } = useQuery({
         queryKey: ['posts'],
 
         queryFn: async () => {
-            const res = await MakeRequest.get("/posts");
+            const res = await MakeRequest.get("/posts/" + currentUser.user_id);
             return res.data;
         }
     })
+
     return (
         <div className='Posts'>
-            <Share/>
+            <Share />
             {
-            error ? (
-                toast.error("An Error occured. Try to Login again")
-            ) : (
-                isPending ? (
-                    toast.loading("Loading Posts")
+                error ? (
+                    toast.error("An Error occured. Try to Login again")
                 ) : (
-                    <>
-                        {data.map((post) => (
-                            <Post post={post} key={post.post_id} />
-                        ))}
-                        {toast.dismiss()}
-                    </>
+                    isPending ? (
+                        toast.loading("Loading Posts")
+                    ) : (
+                        <>
+                            {data.map((post) => (
+                                <Post post={post}  key={post.post_id} />
+                            ))}
+                            {toast.dismiss()}
+                        </>
+                    )
                 )
-            )
             }
 
         </div>

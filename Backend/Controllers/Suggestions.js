@@ -1,7 +1,5 @@
 import { db } from "../connect.js"
-import bcrypt from "bcryptjs";
 import sql from "mssql";
-import Express from "express"
 
 
 // Route to fetch friends of friends
@@ -35,9 +33,9 @@ export const FriendsOfFriends = async (req, res) => {
                        FROM Friends 
                        WHERE friend_id_2 = @userId
                    )
-                   AND friend_id_1 != @userId AND friend_id_1 NOT IN( Select friend_id_1 from Friends where friend_id_2=@userId UNION  Select friend_id_2 from Friends where friend_id_1=@userId)` 
-                    
-                );
+                   AND friend_id_1 != @userId AND friend_id_1 NOT IN( Select friend_id_1 from Friends where friend_id_2=@userId UNION  Select friend_id_2 from Friends where friend_id_1=@userId)`
+
+            );
         //console.log(data.recordset);
         const friendsOfFriends = data.recordset.map(row => row.friend_id_2);
         //console.log(friendsOfFriends);
@@ -79,7 +77,6 @@ export const profiles = async (req, res) => {
 export const otherusers = async (req, res) => {
     const userId = req.params.userId;
     try {
-        //const pool = await sql.connect(config);
         const request = db.request();
         const result = await request.input('userId', sql.Int, userId)
             .query(`SELECT user_id, username, profile_picture

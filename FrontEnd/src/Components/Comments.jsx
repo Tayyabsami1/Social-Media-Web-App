@@ -13,7 +13,7 @@ const Comments = ({ postId }) => {
     const [desc,setDesc]=useState("");
 
     const { isPending, error, data } = useQuery({
-        queryKey: ['comments'],
+        queryKey: [`comments/${postId}`],
 
         queryFn: async () => {
             const res = await MakeRequest.get(`/comments/${postId}`);
@@ -28,7 +28,7 @@ const Comments = ({ postId }) => {
             return MakeRequest.post("/comments", newComment);
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['comments'] })
+            queryClient.invalidateQueries({ queryKey: [`comments/${postId}`] })
         },
     })
 
