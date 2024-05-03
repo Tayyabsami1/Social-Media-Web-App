@@ -56,6 +56,13 @@ create table Comments (
     timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
 )
 
+create table Likes (
+	like_id int Identity(1,1) primary key,
+	user_id int not null,
+	post_id int not null, 
+	FOREIGN KEY (user_id) REFERENCES Users(user_id) ,
+	FOREIGN KEY (post_id) references Posts(post_id) 
+)
 
 
 create table Friends(
@@ -78,6 +85,8 @@ drop table Friends
 drop table Posts
 drop table Messages
 drop table Comments
+drop table Likes 
+drop table Requests
 
 
 select * from Users
@@ -86,8 +95,9 @@ select * from Posts
 select * from Messages
 select * from Comments
 select * from Requests
+select * from Likes 
 
-insert into Friends(friend_id_1,friend_id_2) values(1,2)
+insert into Friends(friend_id_1,friend_id_2) values(2,1)
 INSERT INTO Messages (sender_id, receiver_id, content)
 VALUES 
 (1, 2, 'Hey Jane'),
@@ -96,3 +106,5 @@ VALUES
 insert  into Posts(user_id,content,post_type) values(2,'Hello G','Video')
 
 insert into Comments(user_id,post_id,content ) values(2,2,'Great work bro')
+
+insert into Likes (user_id,post_id) values (1,5)

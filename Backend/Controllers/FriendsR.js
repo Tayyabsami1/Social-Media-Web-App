@@ -1,15 +1,10 @@
 import { db } from "../connect.js"
-import bcrypt from "bcryptjs";
 import sql from "mssql";
-import Express from "express"
-
-
 
 // Fetch friend requests for the logged-in user
 export const FriendRequests = async (req, res) => {
     const userId = req.params.userId;
     try {
-        // const pool = await sql.connect(config);
         const request = db.request();
         const result = await request.input('userId', sql.Int, userId)
             .query(`SELECT distinct u.user_id, u.username, u.profile_picture
@@ -29,7 +24,6 @@ export const AcceptRequests = async (req, res) => {
     const userId = req.params.userId;
     //console.log(requestId)
     try {
-        // const pool = await sql.connect(config);
         const request = db.request();
         await request.input('requestId', sql.Int, requestId)
             .input('userId', sql.Int, userId)
@@ -49,7 +43,6 @@ export const DeclineRequests = async (req, res) => {
     const requestId = req.params.requestId;
     const userId = req.params.userId;
     try {
-        // const pool = await sql.connect(config);
         const request = db.request();
         await request.input('requestId', sql.Int, requestId)
             .input('userId', sql.Int, userId)

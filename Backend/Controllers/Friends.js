@@ -1,9 +1,5 @@
 import { db } from "../connect.js"
-import bcrypt from "bcryptjs";
 import sql from "mssql";
-import Express from "express"
-
-
 
 // Fetch list of friends for the logged-in user
 export const FriendsList =  async (req, res) => {
@@ -28,7 +24,7 @@ export const FriendsList =  async (req, res) => {
 
     } catch (error) {
         console.error('Error fetching friends:', error);
-       return res.status(500).json({ error: 'Internal server error' });
+       return res.status(500).json('Internal server error' );
     }
 };
 

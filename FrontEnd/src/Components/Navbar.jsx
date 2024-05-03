@@ -13,7 +13,6 @@ import MailOutlineOutlinedIcon from '@mui/icons-material/MailOutlineOutlined';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import WbSunnyOutlinedIcon from '@mui/icons-material/WbSunnyOutlined';
 import LogoutIcon from '@mui/icons-material/Logout';
-import PeopleIcon from '@mui/icons-material/People';
 
 import mypic from '../assets/mypic.png'
 

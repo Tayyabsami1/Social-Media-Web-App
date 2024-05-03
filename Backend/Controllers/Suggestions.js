@@ -1,7 +1,5 @@
 import { db } from "../connect.js"
-import bcrypt from "bcryptjs";
 import sql from "mssql";
-import Express from "express"
 
 
 // Route to fetch friends of friends
@@ -82,7 +80,6 @@ export const profiles = async (req, res) => {
 export const otherusers = async (req, res) => {
     const userId = req.params.userId;
     try {
-        //const pool = await sql.connect(config);
         const request = db.request();
         const result = await request.input('userId', sql.Int, userId)
             .query(`SELECT top 5 user_id, username, profile_picture
