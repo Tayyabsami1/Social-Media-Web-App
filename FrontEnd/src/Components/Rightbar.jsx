@@ -199,7 +199,7 @@ const Rightbar = () => {
     async function handleAcceptFriendRequest(requestId) {
         try {
             // Make the POST request to accept the friend request
-            await fetch(`http://localhost:3000/api/FriendsR/accept-friend-request/${requestId}`, {
+            await fetch(`http://localhost:3000/api/FriendsR/accept-friend-request/${requestId}/${loggedInUserId}`, {
                 method: 'POST',
             });
 
@@ -221,7 +221,7 @@ const Rightbar = () => {
 
     async function handleDeclineFriendRequest(requestId) {
         try {
-            await fetch(`http://localhost:3000/api/FriendsR/decline-friend-request/${requestId}`, {
+            await fetch(`http://localhost:3000/api/FriendsR/decline-friend-request/${requestId}/${loggedInUserId}`, {
                 method: 'DELETE',
             });
             // Remove declined request from UI

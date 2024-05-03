@@ -15,8 +15,7 @@ export const FriendRequests = async (req, res) => {
             .query(`SELECT distinct u.user_id, u.username, u.profile_picture
             FROM Requests r
             INNER JOIN Users u ON r.requester_id = u.user_id
-            WHERE r.user_id =@userId
-            Order by u.username`);
+            WHERE r.user_id =@userId`);
         return res.json(result.recordset);
     } catch (error) {
         console.error('Error fetching friend requests:', error);
@@ -27,17 +26,17 @@ export const FriendRequests = async (req, res) => {
 // Accept friend request
 export const AcceptRequests = async (req, res) => {
     const requestId = req.params.requestId;
+    const userId = req.params.userId;
     //console.log(requestId)
     try {
         // const pool = await sql.connect(config);
         const request = db.request();
         await request.input('requestId', sql.Int, requestId)
+            .input('userId', sql.Int, userId)
             .query(`INSERT INTO Friends (friend_id_1, friend_id_2)
-            SELECT distinct user_id, requester_id
-            FROM Requests
-            WHERE requester_id = @requestId;
+            VALUES (@requestId,@userId),(@userId,@requestId);
                     
-                    DELETE FROM Requests WHERE requester_id = @requestId;`);
+                    DELETE FROM Requests WHERE requester_id = @requestId AND user_id=@userId;`);
         return res.json({ message: 'Friend request accepted successfully' });
     } catch (error) {
         console.error('Error accepting friend request:', error);
@@ -48,11 +47,13 @@ export const AcceptRequests = async (req, res) => {
 // Decline friend request
 export const DeclineRequests = async (req, res) => {
     const requestId = req.params.requestId;
+    const userId = req.params.userId;
     try {
         // const pool = await sql.connect(config);
         const request = db.request();
         await request.input('requestId', sql.Int, requestId)
-            .query(`DELETE FROM Requests WHERE requester_id = @requestId`);
+            .input('userId', sql.Int, userId)
+            .query(`DELETE FROM Requests WHERE requester_id = @requestId AND user_id=@userId;`);
         return res.json({ message: 'Friend request declined successfully' });
     } catch (error) {
         console.error('Error declining friend request:', error);

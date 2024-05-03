@@ -23,6 +23,7 @@ export const FriendsOfFriends = async (req, res) => {
                        WHERE friend_id_2 = @userId
                    )
                    AND friend_id_2 != @userId AND friend_id_2 NOT IN( Select friend_id_1 from Friends where friend_id_2=@userId UNION  Select friend_id_2 from Friends where friend_id_1=@userId)
+                   AND friend_id_2 NOT IN(Select user_id from Requests where requester_id=@userId)
                    UNION
                    SELECT DISTINCT friend_id_1 
                    FROM Friends 
@@ -35,7 +36,9 @@ export const FriendsOfFriends = async (req, res) => {
                        FROM Friends 
                        WHERE friend_id_2 = @userId
                    )
-                   AND friend_id_1 != @userId AND friend_id_1 NOT IN( Select friend_id_1 from Friends where friend_id_2=@userId UNION  Select friend_id_2 from Friends where friend_id_1=@userId)` 
+                   AND friend_id_1 != @userId AND friend_id_1 NOT IN( Select friend_id_1 from Friends where friend_id_2=@userId UNION  Select friend_id_2 from Friends where friend_id_1=@userId)
+                   AND friend_id_1 NOT IN(Select user_id from Requests where requester_id=@userId)
+                   ` 
                     
                 );
         //console.log(data.recordset);
@@ -57,7 +60,7 @@ export const profiles = async (req, res) => {
         const query = `SELECT user_id, username, profile_picture
                         FROM Users 
                         WHERE user_id IN (${userIds.map(id => '@id' + id).join(',')})
-                        Order by username`;
+                        `;
 
 
         // Add parameters to the request
@@ -82,7 +85,7 @@ export const otherusers = async (req, res) => {
         //const pool = await sql.connect(config);
         const request = db.request();
         const result = await request.input('userId', sql.Int, userId)
-            .query(`SELECT user_id, username, profile_picture
+            .query(`SELECT top 5 user_id, username, profile_picture
                     FROM Users 
                     WHERE user_id != @userId
                     AND user_id NOT IN(
@@ -95,7 +98,12 @@ export const otherusers = async (req, res) => {
                         FROM Friends
                         WHERE friend_id_1=@userId
                     )
-                    Order by username`);
+                    AND user_id NOT IN(
+                        SELECT user_id
+                        FROM Requests
+                        WHERE requester_id=@userId
+                    )
+                    `);
         return res.json(result.recordset);
     } catch (error) {
         console.error('Error fetching other users:', error);
