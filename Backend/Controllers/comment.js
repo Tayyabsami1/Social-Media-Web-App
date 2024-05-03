@@ -1,5 +1,7 @@
 import { db } from "../connect.js";
 import sql from "mssql"
+import moment from "moment";
+import jwt from "jsonwebtoken";
 
 export const getComments = async (req, res) => {
     const myreq = db.request();
@@ -33,14 +35,14 @@ export const addComment = (req, res) => {
 
         myreq.input("Content", sql.Text, req.body.Content);
         myreq.input("User_id", sql.Int, userInfo.id);
-        myreq.input("post_id", sql.VarChar(255), req.body.post_id);
+        myreq.input("post_id", sql.Int, req.body.post_id);
         myreq.input("timestamp", sql.DateTime, moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"))
 
         if (err)
             return res.json(500).json(err);
 
         const data = await myreq.query(q);
-        return res.status(200).json("Post Creation Successful");
+        return res.status(200).json("Comment Added Successful");
 
     })
 

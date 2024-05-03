@@ -9,7 +9,7 @@ const Post = ({ post }) => {
 
     const [CommentsOpen, setCommentsOpen] = useState(false);
 
-    const postLiked = false;
+    const postLiked = true;
     return (
         <div className="post">
             <div className="container">
@@ -39,7 +39,7 @@ const Post = ({ post }) => {
                 <div className="info">
 
                     <div className="item">
-                        {postLiked ? <FavoriteOutlined /> : <FavoriteBorderOutlined />}
+                        {postLiked ? <FavoriteOutlined style={{color:"red"}} /> : <FavoriteBorderOutlined />}
                         <span>69 Likes</span>
                     </div>
 

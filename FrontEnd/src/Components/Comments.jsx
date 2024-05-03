@@ -1,13 +1,16 @@
-import React, { useContext } from 'react'
+import  { useContext, useState } from 'react'
 import '../Css/Comments.scss'
 import { AuthContext } from '../Context/AuthContext'
-import {useQuery} from "@tanstack/react-query"
+import {useQuery,useQueryClient,useMutation} from "@tanstack/react-query"
 import {MakeRequest} from "../../axios.js"
+import toast from 'react-hot-toast'
+import moment from "moment"
 
 const Comments = ({ postId }) => {
 
 
     const { currentUser } = useContext(AuthContext);
+    const [desc,setDesc]=useState("");
 
     const { isPending, error, data } = useQuery({
         queryKey: ['comments'],
@@ -18,13 +21,32 @@ const Comments = ({ postId }) => {
         }
     })
 
+    const queryClient = useQueryClient();
+
+    const mutation = useMutation({
+        mutationFn: (newComment) => {
+            return MakeRequest.post("/comments", newComment);
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['comments'] })
+        },
+    })
+
+    const handleClick = async (e) => {
+        if (!desc.length)
+            return toast.error("Please write some description");
+        e.preventDefault();
+        mutation.mutate({ Content: desc, post_id: postId });
+        setDesc("");
+    };
+
 
     return (
         <div className='Comments'>
             <div className="write">
                 <img src={""} alt="" />
-                <input type="text" placeholder='Write a comment' />
-                <button>Send</button>
+                <input type="text" value={desc} placeholder='Write a comment' onChange={e=>setDesc(e.target.value)} />
+                <button onClick={handleClick}>Send</button>
             </div>
             
             { error? "Error Occured" :(isPending?"Loading...": data.map(comment => (
@@ -37,7 +59,7 @@ const Comments = ({ postId }) => {
                         <p>{comment.content}</p>
                     </div>
 
-                    <span className='date'>{comment.timestamp} </span>
+                    <span className='date'>{moment(comment.timestamp).fromNow()} </span>
                 </div>
 
             )))}

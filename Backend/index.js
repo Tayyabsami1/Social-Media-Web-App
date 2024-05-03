@@ -52,6 +52,7 @@ app.use("/api/comments",commentRoutes);
 app.use("/api/messages",messageRoutes);
 app.use("/api/Suggestions",SuggestionRoutes)
 app.use("/api/FriendsR",FriendsRRoutes)
+
 app.post("/api/upload",upload.single("file"),(req,res)=>{
     const file=req.file;
     return res.status(200).json(file.filename);
