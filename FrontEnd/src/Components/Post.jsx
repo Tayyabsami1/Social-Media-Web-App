@@ -16,7 +16,15 @@ import { AuthContext } from '../Context/AuthContext'
 const Post = ({ post }) => {
 
     const [CommentsOpen, setCommentsOpen] = useState(false);
+    const [CommentCount, setCommentCount] = useState("");
+
+    const handleCallback=(data)=>{
+        console.log(data)
+        setCommentCount(data);
+    }
+
     const { currentUser } = useContext(AuthContext);
+    
 
     const { isPending, error, data } = useQuery({
         queryKey: [`likes/${post.post_id}`],
@@ -56,7 +64,7 @@ const Post = ({ post }) => {
                         <img src={post.profile_picture} alt="" />
 
                         <div className="details">
-                            <Link to={`/Profile/${post.userId}`} style={{ textDecoration: "none", color: "inherit" }}>
+                            <Link to={`/Profile/${post.user_id}`} style={{ textDecoration: "none", color: "inherit" }}>
                                 <span className='name'>{post.username}</span>
                             </Link>
                             <span className='date'>{moment(post.timestamp).fromNow()}</span>
@@ -81,7 +89,7 @@ const Post = ({ post }) => {
 
                     <div className="item">
                         <TextsmsOutlined onClick={() => setCommentsOpen(!CommentsOpen)} />
-                        <span>69 Comments</span>
+                        <span>{CommentCount} Comments</span>
                     </div>
 
                     <div className="item">
@@ -89,7 +97,7 @@ const Post = ({ post }) => {
                         <span>Share</span>
                     </div>
                 </div>
-                {CommentsOpen && <Comments postId={post.post_id} />}
+                {CommentsOpen && <Comments handleCallback={handleCallback} postId={post.post_id} />}
             </div>
         </div>
     )

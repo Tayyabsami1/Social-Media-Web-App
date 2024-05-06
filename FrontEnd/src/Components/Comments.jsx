@@ -1,4 +1,4 @@
-import  { useContext, useState } from 'react'
+import  { useContext, useState,useEffect } from 'react'
 import '../Css/Comments.scss'
 import { AuthContext } from '../Context/AuthContext'
 import {useQuery,useQueryClient,useMutation} from "@tanstack/react-query"
@@ -6,7 +6,7 @@ import {MakeRequest} from "../../axios.js"
 import toast from 'react-hot-toast'
 import moment from "moment"
 
-const Comments = ({ postId }) => {
+const Comments = ({ postId,handleCallback }) => {
 
 
     const { currentUser } = useContext(AuthContext);
@@ -20,6 +20,9 @@ const Comments = ({ postId }) => {
             return res.data;
         }
     })
+
+
+    isPending?false:handleCallback(data.length)
 
     const queryClient = useQueryClient();
 

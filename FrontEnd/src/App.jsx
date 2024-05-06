@@ -28,12 +28,6 @@ import {
 
 const App = () => {
 
-  // const [data, setData] = useState([]);
-  // useEffect(() => {
-  //   fetch('http://localhost:3000/Card').then(res => res.json()).then(res => setData(res.recordset));
-
-  // }, [])
-
   const user = useContext(AuthContext);
   const { darkMode } = useContext(DarkModeContext);
   const queryClient = new QueryClient()
@@ -70,7 +64,7 @@ const App = () => {
         element: <Home />,
       },
       {
-        path: "/Profile",
+        path: "/Profile/:id",
         element: <Profile />
       },
       {

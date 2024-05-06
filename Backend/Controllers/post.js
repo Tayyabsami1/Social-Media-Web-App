@@ -20,7 +20,7 @@ export const getPosts = async (req, res) => {
         const myreq = db.request();
 
         myreq.input("User_id", sql.Int, userInfo.id)
-        let q = "select p.*,u.user_id as UserId, u.username,u.profile_picture from Posts as p  join Users as u on u.user_id=p.user_id left join Friends f on p.user_id=f.friend_id_1 where f.friend_id_2=@User_id or p.user_id=@User_id order by p.timestamp desc";
+        let q = "select  p.*,u.user_id as UserId, u.username,u.profile_picture from Posts as p  join Users as u on u.user_id=p.user_id left join Friends f on p.user_id=f.friend_id_1 where f.friend_id_2=@User_id or p.user_id=@User_id order by p.timestamp desc";
 
         try {
             const data = await myreq.query(q);

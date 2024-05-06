@@ -108,3 +108,5 @@ insert  into Posts(user_id,content,post_type) values(2,'Hello G','Video')
 insert into Comments(user_id,post_id,content ) values(2,2,'Great work bro')
 
 insert into Likes (user_id,post_id) values (1,5)
+
+select    p.*,  u.user_id as UserId, u.username,u.profile_picture from Posts as p  join Users as u on u.user_id=p.user_id  join Friends f on p.user_id=f.friend_id_1 where  p.user_id=1 order by p.timestamp desc
