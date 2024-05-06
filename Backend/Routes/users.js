@@ -4,6 +4,5 @@ import { getuser } from "../Controllers/user.js";
 const router=Express.Router();
 
 
-router.get("/find/:userID", getuser);
-
+router.get("/find/:user_id", getuser);
 export default router;
