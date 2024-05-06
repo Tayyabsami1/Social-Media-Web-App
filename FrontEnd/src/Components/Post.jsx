@@ -64,7 +64,7 @@ const Post = ({ post }) => {
                         <img src={post.profile_picture} alt="" />
 
                         <div className="details">
-                            <Link to={`/Profile/${post.userId}`} style={{ textDecoration: "none", color: "inherit" }}>
+                            <Link to={`/Profile/${post.user_id}`} style={{ textDecoration: "none", color: "inherit" }}>
                                 <span className='name'>{post.username}</span>
                             </Link>
                             <span className='date'>{moment(post.timestamp).fromNow()}</span>

@@ -45,7 +45,7 @@ const Navbar = () => {
           <MailOutlineOutlinedIcon onClick={() => (navigate("/messages"))} className='icon' />
           <LogoutIcon onClick={() => (navigate("/login"))} className='icon'/>
 
-          <div className="user" onClick={() => (navigate("/profile"))}>
+          <div className="user" onClick={() => (navigate(`/profile/${currentUser.user_id}`))}>
             <img src={mypic} alt="" />
             <span>{currentUser.username}</span>
           </div>

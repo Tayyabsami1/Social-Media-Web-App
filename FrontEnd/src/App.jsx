@@ -64,7 +64,7 @@ const App = () => {
         element: <Home />,
       },
       {
-        path: "/Profile",
+        path: "/Profile/:id",
         element: <Profile />
       },
       {
