@@ -74,42 +74,6 @@ import toast from "react-hot-toast"
 //                         <span>1 min ago </span>
 //                     </div>
 //                 </div>
-
-//                 <div className="item">
-//                     <span>Online Friends</span>
-//                     <div className="user">
-//                         <div className="userinfo">
-//                             <img src={mypic} alt="" />
-//                             <div className="online" />
-//                             <span>Tayyab Sami</span>
-//                         </div>
-//                     </div>
-
-//                     <div className="user">
-//                         <div className="userinfo">
-//                             <img src={mypic} alt="" />
-//                             <div className="online" />
-//                             <span>Tayyab Sami</span>
-//                         </div>
-//                     </div>
-
-//                     <div className="user">
-//                         <div className="userinfo">
-//                             <img src={mypic} alt="" />
-//                             <div className="online" />
-//                             <span>Tayyab Sami</span>
-//                         </div>
-//                     </div>
-
-//                     <div className="user">
-//                         <div className="userinfo">
-//                             <img src={mypic} alt="" />
-//                             <div className="online" />
-//                             <span>Tayyab Sami</span>
-//                         </div>
-//                     </div>
-
-//                 </div>
 //             </div>
 //         </div>
 //     )
@@ -122,14 +86,12 @@ const Rightbar = () => {
     const [friendRequests, setFriendRequests] = useState([]);
     const [friends, setFriends] = useState([]);
     const loggedInUserId = currentUser.user_id;
-    // const loggedInUserId = 1;
 
     useEffect(() => {
         async function fetchSuggestedProfiles() {
             try {
                 const response = await fetch(`http://localhost:3000/api/Suggestions/friends-of-friends/${loggedInUserId}`);
                 const friendsOfFriends = await response.json();
-                //console.log(friendsOfFriends);
                 if (friendsOfFriends.length > 0) {
                     const profilesResponse = await fetch(`http://localhost:3000/api/Suggestions/profiles/${friendsOfFriends.join(',')}`);
                     const suggestedProfilesData = await profilesResponse.json();
@@ -235,7 +197,10 @@ const Rightbar = () => {
             <div className="container">
                 <div className="item">
                     <span>Suggested for you</span>
-                    {suggestedProfiles.map(profile => (
+                    {suggestedProfiles.length === 0 ? (
+                        <div className='NoMsg'>No Suggestions</div>
+                    ):
+                    (suggestedProfiles.map(profile => (
                         <div key={profile.user_id} className="user">
                             <div className="userinfo">
                                 <img src={mypic} alt="" />
@@ -253,17 +218,16 @@ const Rightbar = () => {
                                 )}
                             </div>
                         </div>
-                    ))}
+                    )))}
                 </div>
                 <div className="item">
                     <span>Friend Request List</span>
                     {friendRequests.length === 0 ? (
-                        <div style={{ color: "white", margin: "20px" }}>No Requests</div>
+                        <div className='NoMsg'>No Requests</div>
                     ) : (
                         friendRequests.map(request => (
                             <div key={request.request_id} className="user">
                                 <div className="userinfo">
-                                    {/* <img src={request.profile_picture} alt="" /> */}
                                     <img src={mypic} alt="" />
                                     <span>{request.username}</span>
                                 </div>
@@ -278,12 +242,11 @@ const Rightbar = () => {
                 <div className="item">
                     <span>Your Friends</span>
                     {friends.length === 0 ? (
-                        <div style={{ color: "white", margin: "20px" }}>No Friends</div>
+                        <div className='NoMsg'>No Friends</div>
                     ) : (
                         friends.map(friend => (
                             <div key={friend.user_id} className="user">
                                 <div className="userinfo">
-                                    {/* <img src={friend.profile_picture} alt="" /> */}
                                     <img src={mypic} alt="" />
                                     <span>{friend.username}</span>
                                 </div>

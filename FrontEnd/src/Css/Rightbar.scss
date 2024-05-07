@@ -33,6 +33,11 @@
                     color: grey;
                 }
 
+                .NoMsg{
+                    color: themed("textColor");
+                    padding: 20px;
+                }
+
                 .user {
                     display: flex;
                     align-items: center;

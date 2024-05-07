@@ -11,7 +11,7 @@ import Share from './Share';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../Context/AuthContext';
 
-const Posts = () => {
+const Posts = ({user_id}) => {
 
     const { currentUser } = useContext(AuthContext);
    

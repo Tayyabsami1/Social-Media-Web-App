@@ -29,7 +29,7 @@ export const AcceptRequests = async (req, res) => {
         await request.input('requestId', sql.Int, requestId)
             .input('userId', sql.Int, userId)
             .query(`INSERT INTO Friends (friend_id_1, friend_id_2)
-            VALUES (@requestId,@userId),(@userId,@requestId);
+            VALUES (@userId,@requestId),(@requestId,@userId);
                     
                     DELETE FROM Requests WHERE requester_id = @requestId AND user_id=@userId;`);
         return res.json({ message: 'Friend request accepted successfully' });

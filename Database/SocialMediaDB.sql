@@ -29,7 +29,7 @@ drop table Posts
 CREATE TABLE Posts (
     post_id INT IDENTITY(1,1) PRIMARY KEY,
     user_id INT NOT NULL,
-    content TEXT NOT NULL,
+    content varchar(1000) NOT NULL,
     post_type VARCHAR(10) ,
     media_url VARCHAR(255),
     timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -114,3 +114,5 @@ select    p.*,  u.user_id as UserId, u.username,u.profile_picture from Posts as 
 
 select * from Users
 update users set location='Lahore' where user_id=1
+
+DELETE FROM Friends WHERE Friend_id=27

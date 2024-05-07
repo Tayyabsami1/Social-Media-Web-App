@@ -33,9 +33,7 @@ const Profile = () => {
       }
       catch(err)
       {
-        setTimeout(() => {
           toast.error(err.message)
-        }, 5000); 
       }
     }
   })
@@ -115,7 +113,7 @@ const Profile = () => {
 
         </div>
 
-        <Posts />
+        <Posts user_id={user_id}/>
       </div>
     </div >
   )
