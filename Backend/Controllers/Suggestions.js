@@ -108,14 +108,9 @@ export const otherusers = async (req, res) => {
     }
 };
 
-// Sample route to handle sending friend requests
 export const SendRequest = async (req, res) => {
     const profileId = req.params.profileId;
     const userId = req.params.loggedInUserId;
-    //console.log(userId);
-    // Implement logic to send friend request
-    // Example: Insert request information into Requests table
-    //const { currentUser } = useContext(AuthContext);
     try {
         const request = db.request();
         //const pool = await sql.connect(config);

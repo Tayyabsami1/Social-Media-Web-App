@@ -20,6 +20,7 @@ export const FriendRequests = async (req, res) => {
 
 // Accept friend request
 export const AcceptRequests = async (req, res) => {
+
     const requestId = req.params.requestId;
     const userId = req.params.userId;
     //console.log(requestId)
@@ -38,6 +39,22 @@ export const AcceptRequests = async (req, res) => {
     }
 };
 
+export const DeleteFriend = async (req, res) => {
+    const requestId = req.params.requestId;
+    const userId = req.params.userId;
+    const myreq = db.request();
+
+    try {
+        await myreq.input('requestId', sql.Int, requestId)
+            .input('userId', sql.Int, userId)
+            .query(`DELETE FROM Friends WHERE friend_id_1 = @requestId AND friend_id_2=@userId;
+            DELETE FROM Friends WHERE friend_id_1 = @userId AND friend_id_2=@requestId`)
+        return res.json({ message: 'Friend Removed Successful' });
+    } catch (error) {
+        console.error('Error removing friend :', error);
+        return res.status(500).json({ error: 'Internal server error' });
+    }
+}
 // Decline friend request
 export const DeclineRequests = async (req, res) => {
     const requestId = req.params.requestId;

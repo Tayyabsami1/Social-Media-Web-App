@@ -28,11 +28,6 @@ app.use(cors({
 app.use(Express.json());
 app.use(cookieParser());
 
-// TODO Make a youtube video about it 
-// app.get('/card/:cardNum', async (req, res) => {
-//     try {
-//         const pool = await sql.connect(config);
-//         const data = pool.request().input('parameter', sql.VarChar, req.params.cardNum).query("select * from card where cardNum=@parameter");
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {

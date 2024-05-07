@@ -3,14 +3,15 @@ import Language from "@mui/icons-material/Language";
 import EmailOutlined from "@mui/icons-material/EmailOutlined";
 import MoreVert from "@mui/icons-material/MoreVert";
 import Posts from "./Posts"
+import toast from "react-hot-toast";
 import axios from "axios"
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { MakeRequest } from '../../axios';
 import { AuthContext } from "../Context/AuthContext";
 
 import {
-  useQuery
+  useQuery, useMutation, useQueryClient
 } from '@tanstack/react-query'
 
 import '../Css/Profile.scss'
@@ -26,13 +27,46 @@ const Profile = () => {
     queryKey: ['user'],
 
     queryFn: async () => {
+      try{
       const res = await MakeRequest.get("/users/find/" + user_id);
       return res.data;
+      }
+      catch(err)
+      {
+        setTimeout(() => {
+          toast.error(err.message)
+        }, 5000); 
+      }
     }
   })
 
-  const handleAddFriend=()=>{
-    
+  const { isPending: pending, data: frienddata } = useQuery({
+    queryKey: ['friends'],
+
+    queryFn: async () => {
+      const res = await MakeRequest.get("/Friends/friends/" + user_id);
+      return res.data.map(friend => friend.user_id);
+    }
+  })
+
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: async (isFriend) => {
+      if (!isFriend)
+        return MakeRequest.post(`/FriendsR/accept-friend-request/${user_id}/${currentUser.user_id}`);
+      const res=await  MakeRequest.delete(`/FriendsR/${user_id}/${currentUser.user_id}`);
+      console.log(res.data.message)
+    },
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: ['friends'] })
+    },
+  })
+
+
+  const handleAddFriend = () => {
+    mutation.mutate(frienddata.includes(currentUser.user_id))
   }
 
 
@@ -70,7 +104,7 @@ const Profile = () => {
               </div>
 
             </div>
-            {user_id == currentUser.user_id ? (<button>Update</button>) : <button onClick={handleAddFriend}>Add Friend</button>}
+            {user_id == currentUser.user_id ? (<button>Update</button>) : <button onClick={handleAddFriend}>{pending ? false : frienddata.includes(currentUser.user_id) ? "Friends" : "Add Friend"}</button>}
 
           </div>
 
