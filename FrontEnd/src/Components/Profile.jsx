@@ -20,20 +20,19 @@ import { useLocation } from 'react-router-dom';
 const Profile = () => {
 
 
-  const user_id = useLocation().pathname.split("/")[2];
+  const user_id = parseInt(useLocation().pathname.split("/")[2]);
   const { currentUser } = useContext(AuthContext);
 
   const { isPending, error, data } = useQuery({
     queryKey: ['user'],
 
     queryFn: async () => {
-      try{
-      const res = await MakeRequest.get("/users/find/" + user_id);
-      return res.data;
+      try {
+        const res = await MakeRequest.get("/users/find/" + user_id);
+        return res.data;
       }
-      catch(err)
-      {
-          toast.error(err.message)
+      catch (err) {
+        toast.error(err.message)
       }
     }
   })
@@ -51,9 +50,15 @@ const Profile = () => {
 
   const mutation = useMutation({
     mutationFn: async (isFriend) => {
-      if (!isFriend)
-        return MakeRequest.post(`/FriendsR/accept-friend-request/${user_id}/${currentUser.user_id}`);
-      const res=await  MakeRequest.delete(`/FriendsR/${user_id}/${currentUser.user_id}`);
+      if (!isFriend) {
+        try {
+          return MakeRequest.post(`/FriendsR/accept-friend-request/${user_id}/${currentUser.user_id}`);
+        }
+        catch (err) {
+          toast.error("This User is already your friend");
+        }
+      }
+      const res = await MakeRequest.delete(`/FriendsR/${user_id}/${currentUser.user_id}`);
       console.log(res.data.message)
     },
     onSuccess: () => {
@@ -102,7 +107,7 @@ const Profile = () => {
               </div>
 
             </div>
-            {user_id == currentUser.user_id ? (<button>Update</button>) : <button onClick={handleAddFriend}>{pending ? false : frienddata.includes(currentUser.user_id) ? "Friends" : "Add Friend"}</button>}
+            {user_id === currentUser.user_id ? (<button>Update</button>) : <button onClick={handleAddFriend}>{pending ? false : frienddata.includes(currentUser.user_id) ? "Friends" : "Add Friend"}</button>}
 
           </div>
 
@@ -112,8 +117,8 @@ const Profile = () => {
           </div>
 
         </div>
-
-        <Posts user_id={user_id}/>
+        {pending ? false : frienddata.includes(currentUser.user_id) || currentUser.user_id === user_id ?
+          <Posts user_id={user_id} /> : <div style={{ display: "flex", justifyContent: "center", padding: "20px", color: "white", fontWeight: "bolder" }}> <h2 >Add this Person to see Posts</h2></div>}
       </div>
     </div >
   )

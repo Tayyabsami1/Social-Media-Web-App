@@ -5,7 +5,7 @@ import Posts from './Posts'
 const Home = () => {
   return (
     <div className='Home'>
-      <Posts/>
+      <Posts />
     </div>
   )
 }

@@ -11,16 +11,16 @@ import Share from './Share';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../Context/AuthContext';
 
-const Posts = ({user_id}) => {
+const Posts = ({ user_id }) => {
 
     const { currentUser } = useContext(AuthContext);
-   
+
 
     const { isPending, error, data } = useQuery({
         queryKey: ['posts'],
 
         queryFn: async () => {
-            const res = await MakeRequest.get("/posts/" + currentUser.user_id);
+            const res = await MakeRequest.get("/posts?user_id=" + user_id);
             return res.data;
         }
     })
@@ -37,7 +37,7 @@ const Posts = ({user_id}) => {
                     ) : (
                         <>
                             {data.map((post) => (
-                                <Post post={post}  key={post.post_id} />
+                                <Post post={post} key={post.post_id} />
                             ))}
                             {toast.dismiss()}
                         </>

@@ -26,16 +26,24 @@ export const AcceptRequests = async (req, res) => {
     //console.log(requestId)
     try {
         const request = db.request();
-        await request.input('requestId', sql.Int, requestId)
-            .input('userId', sql.Int, userId)
-            .query(`INSERT INTO Friends (friend_id_1, friend_id_2)
+        const q = "select * from Friends where friend_id_1=@userId and  friend_id_2=@requestId or friend_id_1=@requestId and  friend_id_2=@userId";
+        request.input('requestId', sql.Int, requestId)
+            .input('userId', sql.Int, userId);
+
+        let data = await request.query(q);
+        if (data.recordset.length>=1){
+            return res.status(500).json("This User is already your friend");
+        }
+
+        data = await request.query(`INSERT INTO Friends (friend_id_1, friend_id_2)
             VALUES (@userId,@requestId),(@requestId,@userId);
                     
                     DELETE FROM Requests WHERE requester_id = @requestId AND user_id=@userId;`);
+
         return res.json({ message: 'Friend request accepted successfully' });
     } catch (error) {
         console.error('Error accepting friend request:', error);
-        return res.status(500).json({ error: 'Internal server error' });
+        return res.status(500).json({ error: 'This User is already your friend' });
     }
 };
 
