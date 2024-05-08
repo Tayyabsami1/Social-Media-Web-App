@@ -12,7 +12,7 @@ export const getFriends = async (req, res) => {
     const { userId } = req.params;
     try {
         const query = `
-            SELECT u.user_id, u.username, u.profile_picture 
+            SELECT distinct u.user_id, u.username, u.profile_picture 
             FROM Users u
             JOIN Friends f ON u.user_id = f.friend_id_1 OR u.user_id = f.friend_id_2
             WHERE (f.friend_id_1 = @userId OR f.friend_id_2 = @userId) AND u.user_id != @userId

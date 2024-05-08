@@ -1,26 +1,33 @@
-import React, { useState, useEffect } from 'react';
+import  { useContext,useState, useEffect } from 'react';
 import axios from 'axios';
 import '../Css/Messages.scss';
 import mypic from '../assets/mypic.png';
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 import EmojiPicker from 'emoji-picker-react';
+import { AuthContext } from '../Context/AuthContext';
+import toast from 'react-hot-toast';
+
 
 const Messages = () => {
-    // Simulate a logged-in user (hardcoded user with ID 1 for testing)
-    const currentUser = { id: 1 };
+
+    // const currentUser = { id: 1 };
     const [friends, setFriends] = useState([]);
     const [selectedFriend, setSelectedFriend] = useState(null);
     const [messages, setMessages] = useState([]);
     const [text, setText] = useState('');
     const [open, setOpen] = useState(false);
+    const {currentUser}=useContext(AuthContext);
+
+    // This doesnot have the id please check line number 133
+    console.log(messages)
 
     const fetchFriends = async () => {
         try {
-            const response = await axios.get(`http://localhost:3000/api/messages/friends/${currentUser.id}`);
+            const response = await axios.get(`http://localhost:3000/api/messages/friends/${currentUser.user_id}`);
             console.log(response.data)
-            setFriends(response.data); // assuming the backend sends an array of friends
+            setFriends(response.data); 
         } catch (error) {
-            console.error('Error fetching friends:', error);
+            toast.error('Error fetching friends:', error);
         }
     };
     
@@ -31,7 +38,7 @@ const Messages = () => {
             setSelectedFriend(friend);
             fetchMessages(friend.user_id); // Assuming you pass the ID to fetch messages
         } else {
-            console.log('Friend ID is undefined');
+            toast.error('Friend ID is undefined');
         }
     };
     
@@ -40,12 +47,12 @@ const Messages = () => {
 
     const fetchMessages = async (friendId) => {
         if (!friendId) {
-            console.log('fetchMessages called with undefined friendId');
-            return; // Prevent making a call if friendId is undefined
+            toast.error('Please select a friend');
+            return; 
         }
-        console.log(`Making API request for messages with friend ID: ${friendId}`);
+
         try {
-            const response = await axios.get(`http://localhost:3000/api/messages/${currentUser.id}/${friendId}`);
+            const response = await axios.get(`http://localhost:3000/api/messages/${currentUser.user_id}/${friendId}`);
             console.log('API Response:', response.data);
             setMessages(response.data);
         } catch (error) {
@@ -58,14 +65,9 @@ const Messages = () => {
     useEffect(() => {
         fetchFriends();
         
-    }, []);  
+    }, [currentUser]);  
 
     
-
-
-
-   //-----------------------------------------------------------
-
    const handleSendMessage = async () => {
     if (!text.trim() || !selectedFriend) {
         console.log('No text or no friend selected');
@@ -73,14 +75,14 @@ const Messages = () => {
     }
     
     console.log("Attempting to send message:", {
-        senderId: currentUser.id,
+        senderId: currentUser.user_id,
         receiverId: selectedFriend.user_id,
         content: text
     });
 
     try {
         const response = await axios.post('http://localhost:3000/api/messages/send', {
-            senderId: currentUser.id,
+            senderId: currentUser.user_id,
             receiverId: selectedFriend.user_id,
             content: text
         });
@@ -88,49 +90,58 @@ const Messages = () => {
         setText('');
         setMessages([...messages, {
             content: text,
-            sender_id: currentUser.id,
+            sender_id: currentUser.user_id,
             sent_at: new Date().toISOString() // This will set the time when the message was added
         }]);
 
-        console.log('Message sent successfully:', response.data);
+        toast.success('Message sent successfully');
     } catch (error) {
         console.error('Error sending message:', error.response ? error.response.data.message : 'Failed to send message');
     }
 };
 
-    
-
-
-    //----------------------------------------------
     return (
         <div className="Chatcontainer">
         <div className="Messages">
+
     {friends.map(friend => (
         <div key={friend.user_id} className="Message" onClick={() => handleFriendClick(friend)}>
-            <img src={friend.profile_picture || mypic}  />
+            <img src={"../../public/Uploads/"+friend.profile_picture}  />
             <div className="userinfo">
                 <span>{friend.username}</span>
             </div>
         </div>
     ))}
+    
 </div>
-
 
 <div className="chat">
     {selectedFriend && (
         <>
+        <div className="top">
+                    <div className="user">
+                        <img src={"../../public/Uploads/" + selectedFriend.profile_picture} alt="" />
+                        <div className="texts">
+                            <span>{selectedFriend.username}</span>
+                        </div>
+                    </div>
+                </div>
+                
             <div className="center">
-                {messages.map((message, index) => (
-                    <div key={index} className={`textMessage ${message.sender_id === currentUser.id ? 'Own' : 'Other'}`}>
+                {
+                messages.map((message, index) => (
+                    // Here there is the error
+                    <div key={index} className={`textMessage ${message.sender_id == currentUser.user_id ? 'Own' : 'Other'}`}>
                         <p>{message.content}</p>
                     </div>
                 ))}
+
             </div>
             <div className="bottom">
                 <EmojiEmotionsIcon onClick={() => setOpen(!open)} />
                 {open && <EmojiPicker onEmojiClick={(event, emojiObject) => setText(text + emojiObject.emoji)} />}
                 <input type="text" value={text} onChange={(e) => setText(e.target.value)} placeholder="Type a message..." />
-                <button onClick={handleSendMessage}>Send</button>
+                <button className='sendButton' onClick={handleSendMessage}>Send</button>
             </div>
         </>
     )}

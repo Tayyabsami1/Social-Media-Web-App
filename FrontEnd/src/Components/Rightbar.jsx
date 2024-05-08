@@ -203,8 +203,8 @@ const Rightbar = () => {
                     (suggestedProfiles.map(profile => (
                         <div key={profile.user_id} className="user">
                             <div className="userinfo">
-                                <img src={mypic} alt="" />
-                                {/* <img src={profile.profile_picture} alt="" /> */}
+                                {/* <img src={mypic} alt="" /> */}
+                                 <img src={"../../public/Uploads/"+profile.profile_picture} alt="" /> 
                                 <span>{profile.username}</span>
                             </div>
                             <div className="buttons">
@@ -228,7 +228,7 @@ const Rightbar = () => {
                         friendRequests.map(request => (
                             <div key={request.request_id} className="user">
                                 <div className="userinfo">
-                                    <img src={mypic} alt="" />
+                                <img src={"../../public/Uploads/"+request.profile_picture} alt="" />
                                     <span>{request.username}</span>
                                 </div>
                                 <div className="buttons">
@@ -247,7 +247,7 @@ const Rightbar = () => {
                         friends.map(friend => (
                             <div key={friend.user_id} className="user">
                                 <div className="userinfo">
-                                    <img src={mypic} alt="" />
+                                <img src={"../../public/Uploads/"+friend.profile_picture} alt="" />
                                     <span>{friend.username}</span>
                                 </div>
                             </div>
