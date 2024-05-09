@@ -14,6 +14,7 @@ import { AuthContext } from '../Context/AuthContext';
 const Posts = ({ user_id }) => {
 
     const { currentUser } = useContext(AuthContext);
+    console.log(currentUser.user_id+user_id)
 
 
     const { isPending, error, data } = useQuery({
@@ -27,7 +28,8 @@ const Posts = ({ user_id }) => {
 
     return (
         <div className='Posts'>
-            <Share />
+            {user_id? user_id===currentUser.user_id?  <Share />: <></> :   <Share />}
+          
             {
                 error ? (
                     toast.error("An Error occured. Try to Login again")

@@ -38,7 +38,7 @@ export const getMessages = async (req, res) => {
     const { userId, friendId } = req.params;
     try {
         const query = `
-            SELECT m.content, m.sent_at, CASE WHEN m.sender_id = @userId THEN 'right' ELSE 'left' END AS alignment
+            SELECT m.content,m.sender_id, m.sent_at, CASE WHEN m.sender_id = @userId THEN 'right' ELSE 'left' END AS alignment
             FROM Messages m
             WHERE (m.sender_id = @userId AND m.receiver_id = @friendId) OR (m.sender_id = @friendId AND m.receiver_id = @userId)
             ORDER BY m.sent_at

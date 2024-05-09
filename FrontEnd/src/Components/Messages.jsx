@@ -19,7 +19,7 @@ const Messages = () => {
     const {currentUser}=useContext(AuthContext);
 
     // This doesnot have the id please check line number 133
-    console.log(messages)
+
 
     const fetchFriends = async () => {
         try {
@@ -132,14 +132,15 @@ const Messages = () => {
                 messages.map((message, index) => (
                     // Here there is the error
                     <div key={index} className={`textMessage ${message.sender_id == currentUser.user_id ? 'Own' : 'Other'}`}>
+                       { message.sender_id != currentUser.user_id && <img  src={"../../public/Uploads/" + selectedFriend.profile_picture} alt="" />}
+                        <div className="text">
                         <p>{message.content}</p>
+                        </div>
                     </div>
                 ))}
 
             </div>
             <div className="bottom">
-                <EmojiEmotionsIcon onClick={() => setOpen(!open)} />
-                {open && <EmojiPicker onEmojiClick={(event, emojiObject) => setText(text + emojiObject.emoji)} />}
                 <input type="text" value={text} onChange={(e) => setText(e.target.value)} placeholder="Type a message..." />
                 <button className='sendButton' onClick={handleSendMessage}>Send</button>
             </div>

@@ -44,10 +44,11 @@ const Comments = ({ postId,handleCallback }) => {
     };
 
 
+
     return (
         <div className='Comments'>
             <div className="write">
-                <img src={""} alt="" />
+                <img src={"../../public/Uploads/"+currentUser.profile_picture} alt="" />
                 <input type="text" value={desc} placeholder='Write a comment' onChange={e=>setDesc(e.target.value)} />
                 <button onClick={handleClick}>Send</button>
             </div>
@@ -55,7 +56,7 @@ const Comments = ({ postId,handleCallback }) => {
             { error? "Error Occured" :(isPending?"Loading...": data.map(comment => (
                 <div className="comment" key={postId}>
 
-                    <img src={comment.profile_picture} alt="" />
+                    <img src={"../../public/Uploads/"+comment.profile_picture} alt="" />
 
                     <div className="info">
                         <span>{comment.username}</span>

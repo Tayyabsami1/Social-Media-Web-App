@@ -19,6 +19,13 @@ import { useLocation } from 'react-router-dom';
 
 const Profile = () => {
 
+  const [file, setFile] = useState(null);
+  useEffect(() => {
+    if (file) {
+      myfunc();
+      setFile(null);
+    }
+  }, [file]);
 
   const user_id = parseInt(useLocation().pathname.split("/")[2]);
   const { currentUser } = useContext(AuthContext);
@@ -62,16 +69,34 @@ const Profile = () => {
       console.log(res.data.message)
     },
     onSuccess: () => {
-      // Invalidate and refetch
       queryClient.invalidateQueries({ queryKey: ['friends'] })
     },
   })
+
+
 
 
   const handleAddFriend = () => {
     mutation.mutate(frienddata.includes(currentUser.user_id))
   }
 
+  const mutation2 = useMutation({
+    mutationFn: (newUserPic) => {
+      return MakeRequest.post(`/users/${currentUser.user_id}`, newUserPic);
+    },
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: ['user'] })
+    },
+  })
+
+  const myfunc = async () => {
+    const formData = new FormData();
+    formData.append("file", file);
+    const imgUrl = await MakeRequest.post("/upload", formData);
+    mutation2.mutate({ imgUrl: imgUrl })
+
+  }
 
   return (
     <div className="profile">
@@ -81,11 +106,19 @@ const Profile = () => {
           alt=""
           className="cover"
         />
-        <img
-          src={data == null ? "" : "../../public/Uploads/" + data.profile_picture}
-          alt=""
-          className="profilePic"
+        <input
+          type="file"
+          id="file"
+          style={{ display: "none" }}
+          onChange={(e) => { if (user_id === currentUser.user_id) { setFile(e.target.files[0]) }  }}
         />
+        <label htmlFor= {`file${user_id!=currentUser.user_id?`no`:``}`} >
+          <img
+            src={data == null ? "" : "../../public/Uploads/" + data.profile_picture}
+            alt=""
+            className="profilePic"
+          />
+        </label>
       </div>
       <div className="profileContainer">
 
@@ -118,7 +151,7 @@ const Profile = () => {
 
         </div>
         {pending ? false : frienddata.includes(currentUser.user_id) || currentUser.user_id === user_id ?
-          <Posts user_id={user_id} /> : <div style={{ display: "flex", justifyContent: "center", padding: "20px", color: "white", fontWeight: "bolder" }}> <h2 >Add this Person to see Posts</h2></div>}
+          <Posts user_id={user_id} /> : <div style={{ display: "flex", justifyContent: "center", padding: "20px", color: "black", fontWeight: "bolder" }}> <h2 >Add this Person to see Posts</h2></div>}
       </div>
     </div >
   )

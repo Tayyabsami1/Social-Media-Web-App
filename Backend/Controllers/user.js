@@ -22,3 +22,14 @@ export const getuser = async (req, res) => {
     }
 
 }
+
+export const updateUser=async(req,res)=>{
+    const myreq=db.request();
+    
+    myreq.input("pic",sql.VarChar(255),req.body.imgUrl.data);
+    myreq.input("user_id",sql.Int,req.params.user_id);
+
+    await myreq.query("update users set profile_picture=@pic where user_id=@user_id");
+
+    return res.status(200).json("Picture updated successfully");
+}
