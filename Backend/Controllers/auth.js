@@ -37,12 +37,12 @@ export const signup = async (req, res) => {
 
         try {
 
-            myreq.query(q);
+           await  myreq.query(q);
         }
         catch (err) {
-            console.log(err)
-            return res.status(500).json(err);
+            return res.status(409).json(err.precedingErrors[0].message);
         }
+
         return res.status(200).json("User creation successful");
     }
 

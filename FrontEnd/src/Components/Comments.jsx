@@ -1,16 +1,16 @@
-import  { useContext, useState,useEffect } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import '../Css/Comments.scss'
 import { AuthContext } from '../Context/AuthContext'
-import {useQuery,useQueryClient,useMutation} from "@tanstack/react-query"
-import {MakeRequest} from "../../axios.js"
+import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query"
+import { MakeRequest } from "../../axios.js"
 import toast from 'react-hot-toast'
 import moment from "moment"
 
-const Comments = ({ postId,handleCallback }) => {
+const Comments = ({ postId, handleCallback }) => {
 
 
     const { currentUser } = useContext(AuthContext);
-    const [desc,setDesc]=useState("");
+    const [desc, setDesc] = useState("");
 
     const { isPending, error, data } = useQuery({
         queryKey: [`comments/${postId}`],
@@ -22,13 +22,20 @@ const Comments = ({ postId,handleCallback }) => {
     })
 
 
-    isPending?false:handleCallback(data.length)
+    isPending ? false : handleCallback(data.length)
 
     const queryClient = useQueryClient();
 
     const mutation = useMutation({
-        mutationFn: (newComment) => {
-            return MakeRequest.post("/comments", newComment);
+        mutationFn: async (newComment) => {
+            try {
+              const response=  await  MakeRequest.post("/comments", newComment);
+              toast.success("Comment posted successful")
+            }
+            catch (err) {
+                toast.error(err.response.data);
+                return err;
+            }
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: [`comments/${postId}`] })
@@ -38,7 +45,9 @@ const Comments = ({ postId,handleCallback }) => {
     const handleClick = async (e) => {
         if (!desc.length)
             return toast.error("Please write some description");
+
         e.preventDefault();
+
         mutation.mutate({ Content: desc, post_id: postId });
         setDesc("");
     };
@@ -48,15 +57,15 @@ const Comments = ({ postId,handleCallback }) => {
     return (
         <div className='Comments'>
             <div className="write">
-                <img src={"../../public/Uploads/"+currentUser.profile_picture} alt="" />
-                <input type="text" value={desc} placeholder='Write a comment' onChange={e=>setDesc(e.target.value)} />
+                <img src={"../../public/Uploads/" + currentUser.profile_picture} alt="" />
+                <input type="text" value={desc} placeholder='Write a comment' onChange={e => setDesc(e.target.value)} />
                 <button onClick={handleClick}>Send</button>
             </div>
-            
-            { error? "Error Occured" :(isPending?"Loading...": data.map(comment => (
-                <div className="comment" key={postId}>
 
-                    <img src={"../../public/Uploads/"+comment.profile_picture} alt="" />
+            {error ? "Error Occured" : (isPending ? "Loading..." : data.map(comment => (
+                <div className="comment" key={comment.comment_id}>
+
+                    <img src={"../../public/Uploads/" + comment.profile_picture} alt="" />
 
                     <div className="info">
                         <span>{comment.username}</span>
