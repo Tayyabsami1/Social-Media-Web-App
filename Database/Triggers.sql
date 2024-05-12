@@ -1,3 +1,4 @@
+use SocialMediaDB;
 CREATE TRIGGER UpdateUserTimestamp
 ON Users
 AFTER UPDATE
@@ -85,21 +86,24 @@ BEGIN
             OR content LIKE '%Bastard%'
             OR content LIKE '%Bitch%'
             OR content LIKE '%Sexy%'
-            OR content LIKE '%fat%'
-            OR content LIKE '%ugly%'
+            OR content LIKE '%Bad%'
+            OR content LIKE '%Hate%'
     )
     BEGIN
         -- If comment contains inappropriate language, raise an error
         RAISERROR ('Comment contains inappropriate language.', 16, 1);
 		ROLLBACK TRANSACTION;
     END
-    ELSE
-    BEGIN
-        -- If comment is appropriate, proceed with insertion
-        INSERT INTO Comments (user_id, post_id, content, timestamp)
-        SELECT user_id, post_id, content, timestamp
-        FROM inserted;
-    END
+    --ELSE
+    --BEGIN
+    --    -- If comment is appropriate, proceed with insertion
+    --    INSERT INTO Comments (user_id, post_id, content)
+    --    SELECT user_id, post_id, content
+    --    FROM inserted;
+    --END
 END;
+
+drop trigger CheckCommentContent
+
 
 

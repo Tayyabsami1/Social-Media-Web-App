@@ -19,7 +19,6 @@ const Post = ({ post }) => {
     const [CommentCount, setCommentCount] = useState("");
 
     const handleCallback=(data)=>{
-        console.log(data)
         setCommentCount(data);
     }
 
