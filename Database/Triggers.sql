@@ -94,13 +94,13 @@ BEGIN
         RAISERROR ('Comment contains inappropriate language.', 16, 1);
 		ROLLBACK TRANSACTION;
     END
-    --ELSE
-    --BEGIN
-    --    -- If comment is appropriate, proceed with insertion
-    --    INSERT INTO Comments (user_id, post_id, content)
-    --    SELECT user_id, post_id, content
-    --    FROM inserted;
-    --END
+    ELSE
+    BEGIN
+        -- If comment is appropriate, proceed with insertion
+        INSERT INTO Comments (user_id, post_id, content, timestamp)
+        SELECT user_id, post_id, content, timestamp
+        FROM inserted;
+    END
 END;
 
 drop trigger CheckCommentContent

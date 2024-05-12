@@ -21,11 +21,7 @@ CREATE TABLE Users (
 );
 
 
-drop table Users
-
-
 -- Written by Imran
-drop table Posts
 CREATE TABLE Posts (
     post_id INT IDENTITY(1,1) PRIMARY KEY,
     user_id INT NOT NULL,
