@@ -33,3 +33,27 @@ export const updateUser=async(req,res)=>{
 
     return res.status(200).json("Picture updated successfully");
 }
+
+export const searchuser = async (req, res) => {
+    try {
+      const searchTerm = req.params.searchTerm.toLowerCase(); // Convert search term to lowercase
+   
+      //console.log("Rows: ",searchTerm);
+  
+      const request = db.request();
+      const result = await request.input('searchTerm', sql.VarChar, searchTerm)
+          .query('SELECT username FROM Users WHERE LOWER(username) LIKE @searchTerm + \'%\'');
+          
+     // console.log("Rows: ",result.recordset);
+  
+  
+     //return result.recordset;
+     // Assuming result contains only usernames, directly return it
+     return res.status(200).json(result.recordset);
+     
+    } 
+    catch (error) {
+      console.error("Error fetching users:", error);
+     return res.status(500).json({ message: "Server Error" });
+    }
+  };

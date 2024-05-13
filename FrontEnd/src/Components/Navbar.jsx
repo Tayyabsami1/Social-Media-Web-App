@@ -22,6 +22,35 @@ const Navbar = () => {
   const { currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
   
+  const [searchQuery, setSearchQuery] = useState(''); // Search query state
+  const [fetchedUsers, setFetchedUsers] = useState([]); // Fetched user results state
+
+  useEffect(() => {
+    // Make API request to fetch users based on search query
+    const fetchUsers = async () => { 
+      try {
+        if (searchQuery.length > 0) {
+          const res = await fetch(`http://localhost:3000/api/users/find/${searchQuery}`);
+          if (!res.ok) {
+            throw new Error('Error fetching users:', res.statusText);
+          } else {
+            const getdata = await res.json();
+            setFetchedUsers(getdata); // Set fetchedUsers to the response data
+          }
+        } else {
+          setFetchedUsers([]); // Reset fetchedUsers if searchQuery is empty
+        }
+      } catch (error) {
+        console.error('Error fetching users:', error.message);
+        setFetchedUsers([]); // Set fetchedUsers to empty array on error
+      }
+    }
+  
+    fetchUsers(); // Call the function on component mount and search query change
+  }, [searchQuery]);
+
+
+
   return (
     <>
       <div className="Navbar">
@@ -34,7 +63,23 @@ const Navbar = () => {
 
           <div className="search">
             <SearchIcon />
-            <input type="text" placeholder='Search' />
+            <input
+            type="text"
+            placeholder='Search'
+            value={searchQuery} // Set input value from state
+            onChange={(event) => setSearchQuery(event.target.value)} // Update state on change
+          />
+       {/* Display dropdown list */}
+    {fetchedUsers.length > 0 && (
+  <ul className="dropdown-list-below"> {/* Updated class name */}
+    {fetchedUsers.map((user, index) => (
+      <li key={index} style={{ listStyleType: 'none' }}> {/* Set list style to none */}
+        <class style={{ color: 'black' }}>{user.username}</class> {/* Set text color to black */}
+      </li>
+    ))}
+  </ul>
+)}
+
           </div>
         </div>
 
