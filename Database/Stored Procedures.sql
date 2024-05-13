@@ -1,3 +1,4 @@
+use SocialMediaDB
 CREATE PROCEDURE AddUser(
     @p_username VARCHAR(50),
      @p_email VARCHAR(255),
@@ -78,3 +79,14 @@ BEGIN
         END
     END
 END;
+
+create Procedure DeletePost(
+	@post_id int ,
+	@user_id int 
+)
+as 
+begin 
+	delete from Posts where post_id=@post_id and user_id=@user_id;
+end 
+
+drop Procedure DeletePost

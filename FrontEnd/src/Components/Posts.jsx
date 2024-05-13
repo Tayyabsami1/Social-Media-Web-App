@@ -14,9 +14,6 @@ import { AuthContext } from '../Context/AuthContext';
 const Posts = ({ user_id }) => {
 
     const { currentUser } = useContext(AuthContext);
-    console.log(currentUser.user_id+user_id)
-
-
     const { isPending, error, data } = useQuery({
         queryKey: ['posts'],
 

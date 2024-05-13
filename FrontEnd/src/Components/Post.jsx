@@ -12,18 +12,20 @@ import {
 } from '@tanstack/react-query'
 
 import { AuthContext } from '../Context/AuthContext'
+import toast from 'react-hot-toast'
 
 const Post = ({ post }) => {
 
     const [CommentsOpen, setCommentsOpen] = useState(false);
     const [CommentCount, setCommentCount] = useState("");
+    const [menueOpen, setMenueOpen] = useState(false);
 
-    const handleCallback=(data)=>{
+    const handleCallback = (data) => {
         setCommentCount(data);
     }
 
     const { currentUser } = useContext(AuthContext);
-    
+
 
     const { isPending, error, data } = useQuery({
         queryKey: [`likes/${post.post_id}`],
@@ -40,7 +42,7 @@ const Post = ({ post }) => {
         mutationFn: (isliked) => {
             if (!isliked)
                 return MakeRequest.post("/likes", { post_id: post.post_id });
-            return MakeRequest.delete("/likes/"+ post.post_id );
+            return MakeRequest.delete("/likes/" + post.post_id);
         },
         onSuccess: () => {
             // Invalidate and refetch
@@ -52,6 +54,26 @@ const Post = ({ post }) => {
         mutation.mutate(data.includes(currentUser.user_id))
     }
 
+    const deletemutation = useMutation({
+        mutationFn: async (post_id) => {
+            try {
+                const resp = await MakeRequest.delete("/posts/" + post_id);
+                setTimeout(() => (toast.success(resp.data)), 100);
+            }
+            catch (err) {
+                return toast.error("An Error Occured");
+            }
+        },
+        onSuccess: () => {
+            // Invalidate and refetch
+            queryClient.invalidateQueries({ queryKey: ["posts"] })
+        },
+    })
+
+    const handleDelete = async () => {
+        deletemutation.mutate(post.post_id);
+    }
+
 
     return (
         <div className="post">
@@ -60,7 +82,7 @@ const Post = ({ post }) => {
                 <div className="user">
 
                     <div className="userinfo">
-                        <img src={"../../public/Uploads/"+post.profile_picture} alt="" />
+                        <img src={"../../public/Uploads/" + post.profile_picture} alt="" />
 
                         <div className="details">
                             <Link to={`/Profile/${post.user_id}`} style={{ textDecoration: "none", color: "inherit" }}>
@@ -71,7 +93,8 @@ const Post = ({ post }) => {
 
                     </div>
 
-                    <MoreHoriz />
+                    <MoreHoriz style={{ cursor: "pointer" }} onClick={() => setMenueOpen(!menueOpen)} />
+                    {(menueOpen && post.user_id == currentUser.user_id) && <button onClick={handleDelete}>Delete</button>}
                 </div>
 
                 <div className="content">

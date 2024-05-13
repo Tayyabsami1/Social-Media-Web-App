@@ -49,7 +49,7 @@ create table Comments (
 	post_id INT NOT NULL,
     content TEXT NOT NULL,
 	FOREIGN KEY (user_id) REFERENCES Users(user_id) ,
-	FOREIGN KEY (post_id) references Posts(post_id) ,
+	FOREIGN KEY (post_id) references Posts(post_id) on delete cascade ,
     timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
 )
 
@@ -58,7 +58,7 @@ create table Likes (
 	user_id int not null,
 	post_id int not null, 
 	FOREIGN KEY (user_id) REFERENCES Users(user_id) ,
-	FOREIGN KEY (post_id) references Posts(post_id) 
+	FOREIGN KEY (post_id) references Posts(post_id) on delete cascade 
 )
 
 
@@ -108,7 +108,8 @@ insert into Likes (user_id,post_id) values (1,5)
 
 select    p.*,  u.user_id as UserId, u.username,u.profile_picture from Posts as p  join Users as u on u.user_id=p.user_id  join Friends f on p.user_id=f.friend_id_1 where  p.user_id=1 order by p.timestamp desc
 
-select * from Users
 update users set location='Lahore' where user_id=1
 
 DELETE FROM Friends WHERE Friend_id=27
+
+EXEC DeletePost @post_id =2 , @user_id=1

@@ -15,6 +15,7 @@
             margin: 20px 20px;
 
             .user {
+                position: relative;
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
@@ -42,6 +43,22 @@
                             margin-top: 5px;
                             font-size: 12px;
                         }
+                    }
+                }
+
+                button{
+                    position: absolute;
+                    right: 0;
+                    top: 40px;
+                    border: none;
+                    padding: 8px;
+                    border-radius: 10px;
+                    color: themed("textColor");
+                    background-color: rgba(255, 0, 0, 0.655);
+                    transition: all 0.2s ease-in;
+                    cursor: pointer;
+                    &:hover{
+                        background-color: rgb(255, 63, 63);
                     }
                 }
             }
