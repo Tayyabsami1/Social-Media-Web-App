@@ -29,7 +29,6 @@ const Login = () => {
   // Function to handle image click and change the source
   const handleImageClick = () => {
     // Change the image source when clicked
-    console.log(imageSrc);
     if (imageSrc === initialSrc) {
       setImageSrc(otherSrc);
       setInputType('text');

@@ -5,6 +5,8 @@ import MoreVert from "@mui/icons-material/MoreVert";
 import Posts from "./Posts"
 import toast from "react-hot-toast";
 import axios from "axios"
+import { Link ,useNavigate} from "react-router-dom";
+
 import { useContext, useEffect, useState } from "react";
 
 import { MakeRequest } from '../../axios';
@@ -18,6 +20,8 @@ import '../Css/Profile.scss'
 import { useLocation } from 'react-router-dom';
 
 const Profile = () => {
+
+  const navigate = useNavigate();
 
   const [file, setFile] = useState(null);
   useEffect(() => {
@@ -145,7 +149,9 @@ const Profile = () => {
           </div>
 
           <div className="right">
-            <EmailOutlined />
+            <Link>
+            <EmailOutlined  onClick={() => (navigate("/messages"))} />
+            </Link>
             <MoreVert />
           </div>
 

@@ -75,16 +75,34 @@
                 }
             }
         }
+        .dropdown-list-below {
+            position: absolute;
+            color: themed("textColor") ;
+            top: 90%;
+            left: 220px; 
+            background-color:themed("bg") ; 
+            border-radius:  4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+            width: 26%;
+            z-index: 100; 
+            a{
+                color: themed("textColor") ;
+                text-decoration: none;
+            
+            .list-item{
+                cursor: pointer;
+                border: 1px solid themed("border"); 
+                margin: 5px;
+                padding: 4px;
+                list-style-type: none;
+                
+
+                &:hover{
+                    background-color:themed("bgSoft") ;
+                }
+            }
+        }
+          }
     }
-    .dropdown-list-below {
-        position: absolute;
-        top: 100%; /* Position the dropdown below the search bar */
-        background-color: white; /* Set background color */
-        border: 1px solid #ccc; /* Add border */
-        border-radius: 4px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add box shadow */
-        padding: 8px 0; /* Add padding */
-        width: 40%;
-        z-index: 1; /* Ensure the dropdown is above other content */
-      }
+   
 }

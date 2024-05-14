@@ -23,11 +23,11 @@ export const getuser = async (req, res) => {
 
 }
 
-export const updateUser=async(req,res)=>{
-    const myreq=db.request();
-    
-    myreq.input("pic",sql.VarChar(255),req.body.imgUrl.data);
-    myreq.input("user_id",sql.Int,req.params.user_id);
+export const updateUser = async (req, res) => {
+    const myreq = db.request();
+
+    myreq.input("pic", sql.VarChar(255), req.body.imgUrl.data);
+    myreq.input("user_id", sql.Int, req.params.user_id);
 
     await myreq.query("update users set profile_picture=@pic where user_id=@user_id");
 
@@ -36,24 +36,19 @@ export const updateUser=async(req,res)=>{
 
 export const searchuser = async (req, res) => {
     try {
-      const searchTerm = req.params.searchTerm.toLowerCase(); // Convert search term to lowercase
-   
-      //console.log("Rows: ",searchTerm);
-  
-      const request = db.request();
-      const result = await request.input('searchTerm', sql.VarChar, searchTerm)
-          .query('SELECT username FROM Users WHERE LOWER(username) LIKE @searchTerm + \'%\'');
-          
-     // console.log("Rows: ",result.recordset);
-  
-  
-     //return result.recordset;
-     // Assuming result contains only usernames, directly return it
-     return res.status(200).json(result.recordset);
-     
-    } 
-    catch (error) {
-      console.error("Error fetching users:", error);
-     return res.status(500).json({ message: "Server Error" });
+        const searchTerm = req.params.searchTerm.toLowerCase(); // Convert search term to lowercase
+
+        //console.log("Rows: ",searchTerm);
+
+        const request = db.request();
+        const result = await request.input('searchTerm', sql.VarChar, searchTerm)
+            .query('SELECT username,user_id FROM Users WHERE LOWER(username) LIKE @searchTerm + \'%\'');
+
+        return res.status(200).json(result.recordset);
+
     }
-  };
+    catch (error) {
+        console.error("Error fetching users:", error);
+        return res.status(500).json({ message: "Server Error" });
+    }
+};

@@ -1,8 +1,9 @@
 // import React from 'react'
 import { Link, useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { DarkModeContext } from '../Context/darkModeContext';
 import { AuthContext } from "../Context/AuthContext"
+import toast from "react-hot-toast"
 
 
 import '../Css/Navbar.scss'
@@ -14,42 +15,41 @@ import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import WbSunnyOutlinedIcon from '@mui/icons-material/WbSunnyOutlined';
 import LogoutIcon from '@mui/icons-material/Logout';
 
-import mypic from '../assets/mypic.png'
-
 const Navbar = () => {
 
   const { toggle, darkMode } = useContext(DarkModeContext);
   const { currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
-  
+
   const [searchQuery, setSearchQuery] = useState(''); // Search query state
   const [fetchedUsers, setFetchedUsers] = useState([]); // Fetched user results state
 
   useEffect(() => {
     // Make API request to fetch users based on search query
-    const fetchUsers = async () => { 
+    const fetchUsers = async () => {
       try {
         if (searchQuery.length > 0) {
-          const res = await fetch(`http://localhost:3000/api/users/find/${searchQuery}`);
-          if (!res.ok) {
-            throw new Error('Error fetching users:', res.statusText);
-          } else {
-            const getdata = await res.json();
-            setFetchedUsers(getdata); // Set fetchedUsers to the response data
+          const res = await fetch(`http://localhost:3000/api/users/search/${searchQuery}`);
+          const getdata = await res.json();
+          if (getdata.length < 1) {
+            setTimeout(() => {
+              toast.error("This user doesnot exist in the System")
+            }, 2000);
+
           }
-        } else {
-          setFetchedUsers([]); // Reset fetchedUsers if searchQuery is empty
+          setFetchedUsers(getdata);
         }
-      } catch (error) {
-        console.error('Error fetching users:', error.message);
-        setFetchedUsers([]); // Set fetchedUsers to empty array on error
+        else{
+          setFetchedUsers([]);
+        }
+      }
+      catch (error) {
+        setFetchedUsers([]); // Reset fetchedUsers if searchQuery is empty
       }
     }
-  
+
     fetchUsers(); // Call the function on component mount and search query change
   }, [searchQuery]);
-
-
 
   return (
     <>
@@ -64,21 +64,24 @@ const Navbar = () => {
           <div className="search">
             <SearchIcon />
             <input
-            type="text"
-            placeholder='Search'
-            value={searchQuery} // Set input value from state
-            onChange={(event) => setSearchQuery(event.target.value)} // Update state on change
-          />
-       {/* Display dropdown list */}
-    {fetchedUsers.length > 0 && (
-  <ul className="dropdown-list-below"> {/* Updated class name */}
-    {fetchedUsers.map((user, index) => (
-      <li key={index} style={{ listStyleType: 'none' }}> {/* Set list style to none */}
-        <class style={{ color: 'black' }}>{user.username}</class> {/* Set text color to black */}
-      </li>
-    ))}
-  </ul>
-)}
+              type="text"
+              placeholder='Search'
+              value={searchQuery}
+              onChange={(event) => setSearchQuery(event.target.value)}
+            />
+
+            {fetchedUsers.length > 0 && (
+              <ul className="dropdown-list-below">
+                {fetchedUsers.map((user, index) => (
+
+                  <Link to={`/Profile/${user.user_id}`} key={index}>
+                  <li   className='list-item' >
+                    {user.username}
+                  </li>
+                  </Link>
+                ))}
+              </ul>
+            )}
 
           </div>
         </div>
@@ -88,10 +91,10 @@ const Navbar = () => {
           {darkMode ? <WbSunnyOutlinedIcon className='icon' onClick={toggle} /> : <DarkModeOutlinedIcon className='icon' onClick={toggle} />}
           <HomeOutlinedIcon onClick={() => navigate("/")} className='icon' />
           <MailOutlineOutlinedIcon onClick={() => (navigate("/messages"))} className='icon' />
-          <LogoutIcon onClick={() => (navigate("/login"))} className='icon'/>
+          <LogoutIcon onClick={() => (navigate("/login"))} className='icon' />
 
           <div className="user" onClick={() => (navigate(`/profile/${currentUser.user_id}`))}>
-            <img src={"../../public/Uploads/"+currentUser.profile_picture} alt="" />
+            <img src={"../../public/Uploads/" + currentUser.profile_picture} alt="" />
             <span>{currentUser.username}</span>
           </div>
         </div>
