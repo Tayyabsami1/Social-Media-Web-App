@@ -77,9 +77,6 @@ const Profile = () => {
     },
   })
 
-
-
-
   const handleAddFriend = () => {
     mutation.mutate(frienddata.includes(currentUser.user_id))
   }
@@ -97,7 +94,7 @@ const Profile = () => {
   const myfunc = async () => {
     const formData = new FormData();
     formData.append("file", file);
-    const imgUrl = await MakeRequest.post("/upload", formData);
+    const imgUrl = await MakeRequest.post("/uploadpic/"+currentUser.user_id, formData);
     mutation2.mutate({ imgUrl: imgUrl })
 
   }

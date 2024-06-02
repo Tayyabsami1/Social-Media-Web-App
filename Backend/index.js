@@ -37,8 +37,20 @@ const storage = multer.diskStorage({
       cb(null,  Date.now()+file.originalname)
     }
   })
+
+const profilepic_storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, '../FrontEnd/public/Uploads')
+    },
+    filename: function (req, file, cb) {
+      const lastDotIndex = file.originalname.lastIndexOf('.');
+      const extension = file.originalname.substring(lastDotIndex + 1);
+      cb(null,  "ProfilePicture_"+req.params.user_id+"."+extension)
+    }
+  })
   
   const upload = multer({ storage: storage })
+  const Pic_upload = multer({ storage: profilepic_storage })
 
 app.use("/api/users",userRoutes);
 app.use("/api/auth",authRoutes);
@@ -51,6 +63,12 @@ app.use("/api/FriendsR",FriendsRRoutes)
 app.use("/api/Friends",FriendsRoutes)
 
 app.post("/api/upload",upload.single("file"),(req,res)=>{
+    const file=req.file;
+    return res.status(200).json(file.filename);
+
+})
+
+app.post("/api/uploadpic/:user_id",Pic_upload.single("file"),(req,res)=>{
     const file=req.file;
     return res.status(200).json(file.filename);
 
