@@ -5,7 +5,7 @@ import MoreVert from "@mui/icons-material/MoreVert";
 import Posts from "./Posts"
 import toast from "react-hot-toast";
 import axios from "axios"
-import { Link ,useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { useContext, useEffect, useState } from "react";
 
@@ -105,25 +105,32 @@ const Profile = () => {
   return (
     <div className="profile">
       <div className="images">
+        {/* Cover picture always same  */}
         <img
           src={data == null ? "" : "../../public/Uploads/" + data.cover_picture}
           alt=""
           className="cover"
         />
+
+        {/* Profile Pic Input  */}
         <input
           type="file"
           id="file"
           style={{ display: "none" }}
-          onChange={(e) => { if (user_id === currentUser.user_id) { setFile(e.target.files[0]) }  }}
+          onChange={(e) => { if (user_id === currentUser.user_id) { setFile(e.target.files[0]) } }}
         />
-        <label htmlFor= {`file${user_id!=currentUser.user_id?`no`:``}`} >
+
+        {/* Label for profile Pic */}
+        <label htmlFor={`file${user_id != currentUser.user_id ? `no` : ``}`} >
           <img
             src={data == null ? "" : "../../public/Uploads/" + data.profile_picture}
             alt=""
             className="profilePic"
           />
         </label>
+
       </div>
+
       <div className="profileContainer">
 
         <div className="uInfo">
@@ -131,26 +138,13 @@ const Profile = () => {
           <div className="center">
             <span>{data == null ? "Loading..." : data.username}</span>
 
-            <div className="info">
-
-              <div className="item">
-                <Place />
-                <span>{data == null ? "Loading" : data.location}</span>
-              </div>
-
-              <div className="item">
-                <Language />
-                <span>English</span>
-              </div>
-
-            </div>
             {user_id === currentUser.user_id ? (<button>Update</button>) : <button onClick={handleAddFriend}>{pending ? false : frienddata.includes(currentUser.user_id) ? "Friends" : "Add Friend"}</button>}
 
           </div>
 
           <div className="right">
             <Link>
-            <EmailOutlined  onClick={() => (navigate("/messages"))} />
+              <EmailOutlined onClick={() => (navigate("/messages"))} />
             </Link>
             <MoreVert />
           </div>

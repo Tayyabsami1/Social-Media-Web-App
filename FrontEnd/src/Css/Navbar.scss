@@ -2,6 +2,7 @@
 
 .Navbar {
     @include themify($themes) {
+        z-index: 2;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -21,8 +22,7 @@
             span {
                 font-weight: bold;
                 font-size: 20px;
-                color: themed("logo");;
-
+                color: themed("logo");
             }
 
             .search {
@@ -32,9 +32,6 @@
                 border: 1px solid themed("border");
                 border-radius: 5px;
                 padding: 5px;
-                @include mobile{
-                    display: none;
-                }
 
                 input {
                     border: none;
@@ -43,66 +40,214 @@
                     background-color: transparent;
                 }
             }
+
         }
 
         .right {
-            display: flex;
-            align-items: center;
-            gap: 50px;
-
-            @include mobile{
-                display: none;
-            }
-            .icon{
-                cursor: pointer;
-            }
-
-            .user {
-                cursor: pointer;
+            .myicons {
                 display: flex;
                 align-items: center;
-                gap: 10px;
+                gap: 50px;
 
-                img {
-                    width: 30px;
-                    height: 30px;
-                    border-radius: 50%;
-                    object-fit: cover;
+                .icon {
+                    cursor: pointer;
                 }
 
-                span {
-                    font-weight: 500;
+                .user {
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+
+                    img {
+                        width: 30px;
+                        height: 30px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                    }
+
+                    span {
+                        font-weight: 500;
+                    }
                 }
             }
+
+            .hamburger {
+                display: none;
+                position: relative;
+
+                .menu {
+                    display: flex;
+                    position: absolute;
+                    gap: 15px;
+                    top: 35px;
+                    right: 40px;
+                    color: themed("textColor");
+                }
+            }
+
         }
+
         .dropdown-list-below {
             position: absolute;
-            color: themed("textColor") ;
+            color: themed("textColor");
             top: 90%;
-            left: 220px; 
-            background-color:themed("bg") ; 
-            border-radius:  4px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+            left: 220px;
+            background-color: themed("bg");
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             width: 26%;
-            z-index: 100; 
-            a{
-                color: themed("textColor") ;
-                text-decoration: none;
-            
-            .list-item{
-                cursor: pointer;
-                border: 1px solid themed("border"); 
-                margin: 5px;
-                padding: 4px;
-                list-style-type: none;
-                
+            z-index: 100;
 
-                &:hover{
-                    background-color:themed("bgSoft") ;
+            a {
+                color: themed("textColor");
+                text-decoration: none;
+
+                .list-item {
+                    cursor: pointer;
+                    border: 1px solid themed("border");
+                    margin: 5px;
+                    padding: 4px;
+                    list-style-type: none;
+
+
+                    &:hover {
+                        background-color: themed("bgSoft");
+                    }
                 }
             }
         }
-          }
+
+        @media (max-width: 1004px) {
+            padding: 5px 20px;
+
+            .left {
+                gap: 30px;
+
+                span {
+                    display: none;
+                }
+
+                .search {
+                    gap: 5px;
+                }
+            }
+
+            .dropdown-list-below {
+                left: 70px;
+                width: 36%;
+            }
+        }
+
+        @media (max-width: 831px) {
+            padding: 5px 20px;
+
+            .left {
+                gap: 15px;
+
+                span {
+                    display: none;
+                }
+
+                .search {
+                    gap: 5px;
+
+                    input {
+                        border: none;
+                        width: 250px;
+                    }
+                }
+            }
+
+            .right {
+                .myicons{
+                margin-left: 10px;
+                gap: 33px;
+
+                .user {
+                    gap: 5px;
+
+                    span {
+                        font-size: 10px;
+                    }
+                }
+            }
+            }
+
+            .dropdown-list-below {
+                left: 40px;
+                width: 34%;
+            }
+        }
+
+        @media (max-width: 632px) {
+            padding: 10px 10px;
+
+            .left {
+                gap: 15px;
+
+                span {
+                    display: none;
+                }
+
+                .search {
+                    gap: 5px;
+
+                    input {
+                        width: 150px;
+                    }
+                }
+            }
+
+            .right {
+                .myicons{
+                .user {
+                    gap: 5px;
+
+                    img {
+                        width: 25px;
+                        height: 25px;
+                    }
+
+                    span {
+                        font-size: 9px;
+                    }
+                }
+            }
+            }
+
+            .dropdown-list-below {
+                left: 25px;
+                width: 30%;
+            }
+        }
+
+        @media (max-width: 515px) {
+            .user {
+                span {
+                    display: none;
+                }
+            }
+        }
+
+        @media (max-width: 478px) {
+            .right {
+                .myicons {
+                    display: none;
+                }
+    
+                .hamburger {
+                    display: flex;
+                }
+    
+            }
+        }
+
+        @media (max-width: 414px) {
+            justify-content: space-around;
+        }
     }
-   
+
+
+    
 }

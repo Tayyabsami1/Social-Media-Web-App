@@ -38,7 +38,7 @@ const App = () => {
       <div className={`theme-${darkMode ? "dark" : "light"} `}>
         <Navbar />
         <div style={{ display: "flex" }} className='mainbody'>
-          <div style={{ flex: 6 }}>
+          <div style={{ flex: 6}}>
             <Outlet />
           </div>
           <Rightbar />

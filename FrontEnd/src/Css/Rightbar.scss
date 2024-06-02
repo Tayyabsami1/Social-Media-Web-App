@@ -100,5 +100,81 @@
                 }
             }
         }
+
+        @media (max-width: 992px) {
+            .user {
+                .userinfo {
+                    img {
+                        border-radius: 50%;
+                        object-fit: cover;
+                    }
+                    span {
+                        font-size: 12px;
+                    }
+                }
+
+                .buttons {
+
+                    button {
+                        font-size: 12px;
+                    }
+                }
+            }
+        }
+
+        @media (max-width: 831px) {
+            .container {
+                .item {
+                    padding: 10px;
+    
+                    .user {
+                        .userinfo {
+                            img {
+                                height: 35px;
+                                width: 35px;
+                            }
+                        }
+    
+                        .buttons {
+                            gap: 5px;
+    
+                            button {
+                                padding: 3px;
+                                font-size: 11px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        @media (max-width: 632px) {
+            .container {
+                .item {
+                    padding: 10px;
+    
+                    .user {
+                        .userinfo {
+                            img {
+                                height: 35px;
+                                width: 35px;
+                            }
+                        }
+    
+                        .buttons {
+                            gap: 5px;
+    
+                            button {
+                                padding: 2px;
+                                font-size: 8px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        @media (max-width: 589px) {
+            display: none;
+        }
     }
 }

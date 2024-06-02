@@ -28,16 +28,9 @@
         cursor: pointer;
       }
     }
+
     .profileContainer {
       padding: 20px 70px;
-
-      @include mobile{
-        padding: 10px;
-      }
-
-      @include tablet{
-        padding: 20px;
-      }
 
       .uInfo {
         height: 180px;
@@ -52,14 +45,6 @@
         align-items: center;
         justify-content: space-around;
         margin-bottom: 20px;
-
-        @include mobile{
-          flex-direction: column;
-          height: 30vh;
-          padding: 20px;
-          margin-top: 100px;
-        }
-
 
         .center {
           flex: 1;
@@ -90,6 +75,7 @@
               }
             }
           }
+
           button {
             border: none;
             background-color: #5271ff;
@@ -106,6 +92,23 @@
           align-items: center;
           justify-content: flex-end;
           gap: 10px;
+        }
+      }
+    }
+
+    @media (max-width: 992px) {
+      .images {
+
+        .profilePic {
+          width: 150px;
+          height: 150px;
+          border-radius: 50%;
+          object-fit: cover;
+          position: absolute;
+          left: 0;
+          right: 0;
+          margin: auto;
+          top: 200px;
         }
       }
     }

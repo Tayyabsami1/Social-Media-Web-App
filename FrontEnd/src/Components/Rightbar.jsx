@@ -199,26 +199,29 @@ const Rightbar = () => {
                     <span>Suggested for you</span>
                     {suggestedProfiles.length === 0 ? (
                         <div className='NoMsg'>No Suggestions</div>
-                    ):
-                    (suggestedProfiles.map(profile => (
-                        <div key={profile.user_id} className="user">
-                            <div className="userinfo">
-                                {/* <img src={mypic} alt="" /> */}
-                                 <img src={"../../public/Uploads/"+profile.profile_picture} alt="" /> 
-                                <span>{profile.username}</span>
+                    ) :
+                        (suggestedProfiles.map(profile => (
+                            <div key={profile.user_id} className="user">
+
+                                <div className="userinfo">
+
+                                    <img src={"../../public/Uploads/" + profile.profile_picture} alt="" />
+                                    <span>{profile.username}</span>
+                                </div>
+
+                                <div className="buttons">
+                                    {profile.requested ? (
+                                        <button>Requested</button>
+                                    ) : (
+                                        <>
+                                            <button onClick={() => handleAddFriend(profile.user_id)}>Add Friend</button>
+                                            <button onClick={() => handleDismissProfile(profile.user_id)}>Dismiss</button>
+                                        </>
+                                    )}
+                                </div>
+                                
                             </div>
-                            <div className="buttons">
-                                {profile.requested ? (
-                                    <button>Requested</button>
-                                ) : (
-                                    <>
-                                        <button onClick={() => handleAddFriend(profile.user_id)}>Add Friend</button>
-                                        <button onClick={() => handleDismissProfile(profile.user_id)}>Dismiss</button>
-                                    </>
-                                )}
-                            </div>
-                        </div>
-                    )))}
+                        )))}
                 </div>
                 <div className="item">
                     <span>Friend Request List</span>
@@ -228,7 +231,7 @@ const Rightbar = () => {
                         friendRequests.map(request => (
                             <div key={request.request_id} className="user">
                                 <div className="userinfo">
-                                <img src={"../../public/Uploads/"+request.profile_picture} alt="" />
+                                    <img src={"../../public/Uploads/" + request.profile_picture} alt="" />
                                     <span>{request.username}</span>
                                 </div>
                                 <div className="buttons">
@@ -247,7 +250,7 @@ const Rightbar = () => {
                         friends.map(friend => (
                             <div key={friend.user_id} className="user">
                                 <div className="userinfo">
-                                <img src={"../../public/Uploads/"+friend.profile_picture} alt="" />
+                                    <img src={"../../public/Uploads/" + friend.profile_picture} alt="" />
                                     <span>{friend.username}</span>
                                 </div>
                             </div>

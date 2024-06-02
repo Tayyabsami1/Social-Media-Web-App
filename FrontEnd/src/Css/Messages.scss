@@ -156,10 +156,6 @@
                             p {
                                 background-color: #5183fe;
                             }
-
-                            span {
-                                // background-color: #5183fe;
-                            }
                         }
                     }
                 }
@@ -212,6 +208,11 @@
                 }
             }
         }
-
+        
+        @media (max-width: 589px) {
+            height: calc(100vh );
+    
+        }
     }
+
 }
