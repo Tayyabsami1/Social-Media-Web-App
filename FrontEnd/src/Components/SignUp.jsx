@@ -35,7 +35,7 @@ const SignUp = () => {
     if (Inputs.Username.length && Inputs.Email.length && Inputs.Password.length && Inputs.Birthdate.length) {
 
       try {
-        await axios.post("http://localhost:3000/api/auth/signup", Inputs, {
+        await axios.post(`${import.meta.env.VITE_TEST_VAR}/api/auth/signup`, Inputs, {
           withCredentials: true
         });
         navigate("/login");

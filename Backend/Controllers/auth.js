@@ -2,6 +2,8 @@ import { db } from "../connect.js"
 import bcrypt from "bcryptjs";
 import sql from "mssql";
 import jwt from "jsonwebtoken"
+import dotenv from "dotenv"
+dotenv.config();
 
 export const signup = async (req, res) => {
 
@@ -74,7 +76,7 @@ export const login = async (req, res) => {
         
         // creating an Authentication token on the basis of User Id will be further used to authenticate user to 
         // create and view posts 
-        const token = jwt.sign({ id: data.recordset[0].user_id }, "secretkey");
+        const token = jwt.sign({ id: data.recordset[0].user_id }, process.env.REACT_APP_SecretKey);
 
         // Destructuring data from User table
         const { password, ...others } = data.recordset[0];
