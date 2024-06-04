@@ -19,16 +19,16 @@ const app = Express();
 
 // Middlewares
 app.use((req,res,next)=>{
+  res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Credentials",true);
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 })
 
 import dotenv from "dotenv"
 dotenv.config();
 
-app.use(cors({
-    origin:"https://socialsparks.netlify.app",
-}));
+app.use(cors({origin:true}));
 
 app.use(Express.json());
 app.use(cookieParser());
