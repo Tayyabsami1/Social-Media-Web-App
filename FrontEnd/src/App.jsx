@@ -28,7 +28,7 @@ import {
 
 const App = () => {
 
-  const user = useContext(AuthContext);
+  const {currentUser} = useContext(AuthContext);
   const { darkMode } = useContext(DarkModeContext);
   const queryClient = new QueryClient()
 
@@ -49,7 +49,7 @@ const App = () => {
   }
 
   const ProtectedRoute = ({ children }) => {
-    if (!user) {
+    if (!currentUser) {
       return <Navigate to='/Login' />
     }
     return children;
