@@ -23,8 +23,11 @@ app.use((req,res,next)=>{
     next();
 })
 
+import dotenv from "dotenv"
+dotenv.config();
+
 app.use(cors({
-    origin:"http://localhost:5173",
+    origin:process.env.REACT_APP_Origin,
 }));
 
 app.use(Express.json());
