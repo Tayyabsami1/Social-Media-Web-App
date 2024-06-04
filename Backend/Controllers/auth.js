@@ -81,7 +81,7 @@ export const login = async (req, res) => {
         // Destructuring data from User table
         const { password, ...others } = data.recordset[0];
         //saving a cookie named access toeken containing my secure token and user data without password
-        return res.cookie("accessToken", token, { httpOnly: true }).status(200).json(others)
+        return res.cookie("accessToken", token).status(200).json(others)
     }
     catch (err) {
         return res.status(500).json(err);
@@ -89,7 +89,7 @@ export const login = async (req, res) => {
 }
 
 export const logout = (req, res) => {
-    res.clearCookie("accesstoken", {
+    res.clearCookie("accessToken", {
         secure: true,
         sameSite: "none"
     }).status(200).json("User Logged out")
