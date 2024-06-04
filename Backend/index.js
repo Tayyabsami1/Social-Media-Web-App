@@ -13,7 +13,9 @@ import SuggestionRoutes from "./Routes/Suggestions.js"
 import FriendsRRoutes from "./Routes/FriendsR.js"
 import FriendsRoutes from "./Routes/Friends.js"
 
+
 const app = Express();
+
 
 // Middlewares
 app.use((req,res,next)=>{
