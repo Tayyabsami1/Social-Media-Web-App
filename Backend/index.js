@@ -21,14 +21,14 @@ const app = Express();
 app.use((req,res,next)=>{
   // res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Credentials",true);
-    // res.header("Access-Control-Allow-Headers", "*");
+    res.header("Access-Control-Allow-Headers", "*");
     next();
 })
 
 import dotenv from "dotenv"
 dotenv.config();
 
-app.use(cors({origin:true}));
+app.use(cors());
 
 app.use(Express.json());
 app.use(cookieParser());
