@@ -27,7 +27,7 @@ import dotenv from "dotenv"
 dotenv.config();
 
 app.use(cors({
-    origin:process.env.REACT_APP_Origin,
+    origin:"https://socialsparks.netlify.app",
 }));
 
 app.use(Express.json());
