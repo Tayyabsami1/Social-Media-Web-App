@@ -27,12 +27,13 @@ const corsOptions = {
       callback(new Error('Not allowed by CORS'));
     }
   },
+  credentials: true, // Enable credentials
   optionsSuccessStatus: 200,
 };
 // Middlewares
 app.use((req,res,next)=>{
-//   res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Credentials",true);
+  // res.header("Access-Control-Allow-Origin", "*");
+    // res.header("Access-Control-Allow-Credentials",true);
 //     res.header("Access-Control-Allow-Headers", "*");
     next();
 })
