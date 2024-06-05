@@ -31,11 +31,19 @@ const corsOptions = {
   optionsSuccessStatus: 200,
 };
 // Middlewares
-app.use((req,res,next)=>{
+app.use((req, res, next) => {
   // res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Credentials",true);
-//     res.header("Access-Control-Allow-Headers", "*");
+  res.header('Access-Control-Allow-Origin', 'https://socialsparks.netlify.app');
+  // res.header('Access-Control-Allow-Origin', 'http://localhost:5173');
+  res.header("Access-Control-Allow-Credentials", true);
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+  //     res.header("Access-Control-Allow-Headers", "*");
+  if (req.method === 'OPTIONS') {
+    res.sendStatus(200);
+  } else {
     next();
+  }
 })
 
 import dotenv from "dotenv"
@@ -44,57 +52,57 @@ dotenv.config();
 // app.use(cors({origin:true}));
 
 app.use(cors(corsOptions));
-app.options('*', cors(corsOptions)); 
+app.options('*', cors(corsOptions));
 
 app.use(Express.json());
 app.use(cookieParser());
 
 
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, '../FrontEnd/public/Uploads')
-    },
-    filename: function (req, file, cb) {
-      cb(null,  Date.now()+file.originalname)
-    }
-  })
+  destination: function (req, file, cb) {
+    cb(null, '../FrontEnd/public/Uploads')
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + file.originalname)
+  }
+})
 
 const profilepic_storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, '../FrontEnd/public/Uploads')
-    },
-    filename: function (req, file, cb) {
-      const lastDotIndex = file.originalname.lastIndexOf('.');
-      const extension = file.originalname.substring(lastDotIndex + 1);
-      cb(null,  "ProfilePicture_"+req.params.user_id+"."+extension)
-    }
-  })
-  
-  const upload = multer({ storage: storage })
-  const Pic_upload = multer({ storage: profilepic_storage })
+  destination: function (req, file, cb) {
+    cb(null, '../FrontEnd/public/Uploads')
+  },
+  filename: function (req, file, cb) {
+    const lastDotIndex = file.originalname.lastIndexOf('.');
+    const extension = file.originalname.substring(lastDotIndex + 1);
+    cb(null, "ProfilePicture_" + req.params.user_id + "." + extension)
+  }
+})
 
-app.use("/api/users",userRoutes);
-app.use("/api/auth",authRoutes);
-app.use("/api/posts",postRoutes);
-app.use("/api/likes",likeRoutes);
-app.use("/api/comments",commentRoutes);
-app.use("/api/messages",messageRoutes);
-app.use("/api/Suggestions",SuggestionRoutes)
-app.use("/api/FriendsR",FriendsRRoutes)
-app.use("/api/Friends",FriendsRoutes)
+const upload = multer({ storage: storage })
+const Pic_upload = multer({ storage: profilepic_storage })
 
-app.post("/api/upload",upload.single("file"),(req,res)=>{
-    const file=req.file;
-    return res.status(200).json(file.filename);
+app.use("/api/users", userRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/posts", postRoutes);
+app.use("/api/likes", likeRoutes);
+app.use("/api/comments", commentRoutes);
+app.use("/api/messages", messageRoutes);
+app.use("/api/Suggestions", SuggestionRoutes)
+app.use("/api/FriendsR", FriendsRRoutes)
+app.use("/api/Friends", FriendsRoutes)
+
+app.post("/api/upload", upload.single("file"), (req, res) => {
+  const file = req.file;
+  return res.status(200).json(file.filename);
 
 })
 
-app.post("/api/uploadpic/:user_id",Pic_upload.single("file"),(req,res)=>{
-    const file=req.file;
-    return res.status(200).json(file.filename);
+app.post("/api/uploadpic/:user_id", Pic_upload.single("file"), (req, res) => {
+  const file = req.file;
+  return res.status(200).json(file.filename);
 
 })
 
 app.listen(3000, () => {
-    console.log("The server has started");
+  console.log("The server has started");
 })
