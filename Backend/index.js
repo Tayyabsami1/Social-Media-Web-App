@@ -16,8 +16,8 @@ import FriendsRoutes from "./Routes/Friends.js"
 
 const app = Express();
 
-// const allowedOrigins = ['https://socialsparks.netlify.app'];
-const allowedOrigins = ['http://localhost:5173'];
+const allowedOrigins = ['https://socialsparks.netlify.app'];
+// const allowedOrigins = ['http://localhost:5173'];
 
 const corsOptions = {
   origin: (origin, callback) => {
