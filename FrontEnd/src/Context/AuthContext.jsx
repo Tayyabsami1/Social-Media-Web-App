@@ -12,10 +12,10 @@ export const AuthContextProvider = ({ children }) => {
     const login =async (inputs) => {
         // In response we get the User data 
         const res =await axios.post(`${import.meta.env.VITE_Backend_Url}/api/auth/login`,inputs,{
-            withCredentials:true,
+            // withCredentials:true,
             headers: {
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': 'https://socialsparks.netlify.app',
+                // 'Access-Control-Allow-Origin': 'https://socialsparks.netlify.app',
               },
         });
         // We set the User in our local storage
