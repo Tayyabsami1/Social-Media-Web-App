@@ -16,19 +16,33 @@ import FriendsRoutes from "./Routes/Friends.js"
 
 const app = Express();
 
+const allowedOrigins = ['https://socialsparks.netlify.app'];
+// const allowedOrigins = ['http://localhost:5173'];
 
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  optionsSuccessStatus: 200,
+};
 // Middlewares
 app.use((req,res,next)=>{
-  res.header("Access-Control-Allow-Origin", "https://socialsparks.netlify.app");
+//   res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Credentials",true);
-    res.header("Access-Control-Allow-Headers", "*");
+//     res.header("Access-Control-Allow-Headers", "*");
     next();
 })
 
 import dotenv from "dotenv"
 dotenv.config();
 
-app.use(cors({origin:"https://socialsparks.netlify.app"}));
+// app.use(cors({origin:true}));
+
+app.use(cors(corsOptions));
 
 app.use(Express.json());
 app.use(cookieParser());
