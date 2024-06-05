@@ -36,7 +36,11 @@ const SignUp = () => {
 
       try {
         await axios.post(`${import.meta.env.VITE_Backend_Url}/api/auth/signup`, Inputs, {
-          withCredentials: true
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': 'https://socialsparks.netlify.app',
+          },
         });
         navigate("/login");
       }
