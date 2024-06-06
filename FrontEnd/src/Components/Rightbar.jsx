@@ -1,10 +1,86 @@
 import '../Css/Rightbar.scss'
+import mypic from '../assets/mypic.png'
 import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../Context/AuthContext'
 import toast from "react-hot-toast"
 
-const Rightbar = () => {
+// const Rightbar = () => {
+//     return (
+//         <div className='Rightbar'>
+//             <div className="container">
+//                 <div className="item">
+//                     <span>Suggested for you</span>
+//                     <div className="user">
+//                         <div className="userinfo">
+//                             <img src={mypic} alt="" />
+//                             <span>Tayyab Sami</span>
+//                         </div>
+//                         <div className="buttons">
+//                             <button>Add Friend</button>
+//                             <button>Dismiss</button>
+//                         </div>
 
+//                     </div>
+//                 </div>
+//                 <div className="item">
+//                     <span>Your Friends</span>
+//                     <div className="user">
+//                         <div className="userinfo">
+//                             <img src={mypic} alt="" />
+//                             <span>Tayyab Sami</span>
+//                         </div>
+
+//                     </div>
+//                 </div>
+//                 <div className="item">
+//                     <span>Latest Activities</span>
+//                     <div className="user">
+//                         <div className="userinfo">
+//                             <img src={mypic} alt="" />
+//                             <p>
+//                                 <span>Tayyab Sami</span> Changed their picture
+//                             </p>
+//                         </div>
+//                         <span>1 min ago </span>
+//                     </div>
+
+//                     <div className="user">
+//                         <div className="userinfo">
+//                             <img src={mypic} alt="" />
+//                             <p>
+//                                 <span>Tayyab Sami</span> liked a photo
+//                             </p>
+//                         </div>
+//                         <span>1 min ago </span>
+//                     </div>
+
+//                     <div className="user">
+//                         <div className="userinfo">
+//                             <img src={mypic} alt="" />
+//                             <p>
+//                                 <span>Tayyab Sami</span> liked a comment
+//                             </p>
+//                         </div>
+//                         <span>1 min ago </span>
+//                     </div>
+
+//                     <div className="user">
+//                         <div className="userinfo">
+//                             <img src={mypic} alt="" />
+//                             <p>
+//                                 <span>Tayyab Sami</span> posted
+//                             </p>
+//                         </div>
+//                         <span>1 min ago </span>
+//                     </div>
+//                 </div>
+//             </div>
+//         </div>
+//     )
+// }
+
+
+const Rightbar = () => {
     const { currentUser } = useContext(AuthContext);
     const [suggestedProfiles, setSuggestedProfiles] = useState([]);
     const [friendRequests, setFriendRequests] = useState([]);
@@ -14,14 +90,14 @@ const Rightbar = () => {
     useEffect(() => {
         async function fetchSuggestedProfiles() {
             try {
-                const response = await fetch(`${import.meta.env.VITE_Backend_Url}/api/Suggestions/friends-of-friends/${loggedInUserId}`);
+                const response = await fetch(`http://localhost:3000/api/Suggestions/friends-of-friends/${loggedInUserId}`);
                 const friendsOfFriends = await response.json();
                 if (friendsOfFriends.length > 0) {
-                    const profilesResponse = await fetch(`${import.meta.env.VITE_Backend_Url}/api/Suggestions/profiles/${friendsOfFriends.join(',')}`);
+                    const profilesResponse = await fetch(`http://localhost:3000/api/Suggestions/profiles/${friendsOfFriends.join(',')}`);
                     const suggestedProfilesData = await profilesResponse.json();
                     setSuggestedProfiles(suggestedProfilesData);
                 } else {
-                    const usersResponse = await fetch(`${import.meta.env.VITE_Backend_Url}/api/Suggestions/other-users/${loggedInUserId}`);
+                    const usersResponse = await fetch(`http://localhost:3000/api/Suggestions/other-users/${loggedInUserId}`);
                     const otherUsersData = await usersResponse.json();
                     setSuggestedProfiles(otherUsersData);
                 }
@@ -33,7 +109,7 @@ const Rightbar = () => {
         fetchSuggestedProfiles();
         async function fetchFriendRequests() {
             try {
-                const response = await fetch(`${import.meta.env.VITE_Backend_Url}/api/FriendsR/friend-requests/${loggedInUserId}`);
+                const response = await fetch(`http://localhost:3000/api/FriendsR/friend-requests/${loggedInUserId}`);
                 const data = await response.json();
                 setFriendRequests(data);
             } catch (error) {
@@ -45,7 +121,7 @@ const Rightbar = () => {
 
         async function fetchFriends() {
             try {
-                const response = await fetch(`${import.meta.env.VITE_Backend_Url}/api/Friends/friends/${loggedInUserId}`);
+                const response = await fetch(`http://localhost:3000/api/Friends/friends/${loggedInUserId}`);
                 const data = await response.json();
                 setFriends(data);
             } catch (error) {
@@ -58,7 +134,7 @@ const Rightbar = () => {
 
     async function handleAddFriend(profileId) {
         try {
-            await fetch(`${import.meta.env.VITE_Backend_Url}/api/Suggestions/send-friend-request/${profileId}/${loggedInUserId}`,
+            await fetch(`http://localhost:3000/api/Suggestions/send-friend-request/${profileId}/${loggedInUserId}`,
                 {
                     method: 'POST',
                 });
@@ -84,7 +160,7 @@ const Rightbar = () => {
     async function handleAcceptFriendRequest(requestId) {
         try {
             // Make the POST request to accept the friend request
-            await fetch(`${import.meta.env.VITE_Backend_Url}/api/FriendsR/accept-friend-request/${requestId}/${loggedInUserId}`, {
+            await fetch(`http://localhost:3000/api/FriendsR/accept-friend-request/${requestId}/${loggedInUserId}`, {
                 method: 'POST',
             });
 
@@ -94,7 +170,7 @@ const Rightbar = () => {
             toast.success("Friend request Accepted")
             const updatedProfiles = suggestedProfiles.filter(request => request.user_id !== requestId);
             setSuggestedProfiles(updatedProfiles);
-            const response = await fetch(`${import.meta.env.VITE_Backend_Url}/api/Friends/friends/${loggedInUserId}`);
+            const response = await fetch(`http://localhost:3000/api/Friends/friends/${loggedInUserId}`);
             const data = await response.json();
             setFriends(data);
 
@@ -106,7 +182,7 @@ const Rightbar = () => {
 
     async function handleDeclineFriendRequest(requestId) {
         try {
-            await fetch(`${import.meta.env.VITE_Backend_Url}/api/FriendsR/decline-friend-request/${requestId}/${loggedInUserId}`, {
+            await fetch(`http://localhost:3000/api/FriendsR/decline-friend-request/${requestId}/${loggedInUserId}`, {
                 method: 'DELETE',
             });
             // Remove declined request from UI

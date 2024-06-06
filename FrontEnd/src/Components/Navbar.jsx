@@ -32,7 +32,7 @@ const Navbar = () => {
     const fetchUsers = async () => {
       try {
         if (searchQuery.length > 0) {
-          const res = await fetch(`${import.meta.env.VITE_Backend_Url}/api/users/search/${searchQuery}`);
+          const res = await fetch(`http://localhost:3000/api/users/search/${searchQuery}`);
           const getdata = await res.json();
           if (getdata.length < 1) {
             setTimeout(() => {

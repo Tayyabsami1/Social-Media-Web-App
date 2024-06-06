@@ -35,12 +35,8 @@ const SignUp = () => {
     if (Inputs.Username.length && Inputs.Email.length && Inputs.Password.length && Inputs.Birthdate.length) {
 
       try {
-        await axios.post(`${import.meta.env.VITE_Backend_Url}/api/auth/signup`, Inputs, {
-          // withCredentials: true,
-          headers: {
-            'Content-Type': 'application/json',
-            // 'Access-Control-Allow-Origin': 'https://socialsparks.netlify.app',
-          },
+        await axios.post("http://localhost:3000/api/auth/signup", Inputs, {
+          withCredentials: true
         });
         navigate("/login");
       }
